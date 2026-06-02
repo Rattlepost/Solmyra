@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Far Lands</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, sans-serif; background: #1a1a2e; color: #e8e4dc; min-height: 100vh; padding: 20px; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 12px; color: #e8e4dc; }
+
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #888; margin-bottom: 10px; }
+  .breadcrumb .crumb { color: #7aafee; cursor: pointer; }
+  .breadcrumb .crumb:hover { text-decoration: underline; }
+  .breadcrumb .sep { color: #555; }
+  .breadcrumb .cur { color: #e8e4dc; font-weight: 500; }
+
+  .map-wrap { position: relative; width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
+  .map-wrap img { display: block; width: 100%; height: auto; pointer-events: none; user-select: none; }
+  .map-wrap svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+  .hotspot { cursor: pointer; }
+  .hotspot polygon { fill: transparent; stroke: none; transition: fill 0.5s ease; }
+
+  .region-label {
+    pointer-events: none;
+    font-size: 42px; font-weight: 600; font-family: system-ui, sans-serif;
+    fill: transparent;
+    text-anchor: middle;
+    transition: fill 0.5s ease;
+    paint-order: stroke;
+    stroke: rgba(0,0,0,0);
+    stroke-width: 6px;
+  }
+  .hotspot:hover .region-label {
+    fill: rgba(255,255,255,0.9);
+    stroke: rgba(0,0,0,0.5);
+  }
+
+  .tip {
+    position: absolute; background: #111827cc; backdrop-filter: blur(6px);
+    border: 1px solid #334155; border-radius: 8px; padding: 8px 12px;
+    font-size: 12px; pointer-events: none; opacity: 0;
+    transition: opacity 0.2s; z-index: 10; max-width: 180px;
+  }
+  .tip.show { opacity: 1; }
+  .tip strong { display: block; font-size: 13px; font-weight: 500; color: #f1f5f9; margin-bottom: 2px; }
+  .tip span { color: #94a3b8; }
+
+  .info-panel { margin-top: 14px; background: #111827; border-radius: 10px; padding: 16px 18px; border: 1px solid #1e293b; }
+  .info-panel h2 { font-size: 17px; font-weight: 500; margin-bottom: 6px; color: #f1f5f9; }
+  .info-panel p { font-size: 13px; color: #94a3b8; line-height: 1.65; }
+  .info-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .info-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; border: 1px solid #334155; color: #94a3b8; background: #1e293b; }
+  .develop-btn {
+    margin-top: 12px; display: inline-flex; align-items: center; gap: 6px;
+    border: 1px dashed #334155; background: transparent; color: #94a3b8;
+    border-radius: 8px; padding: 7px 14px; font-size: 12px; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .develop-btn:hover { background: #1e293b; color: #f1f5f9; }
+  .hint { font-size: 12px; color: #555; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h1>The Far Lands</h1>
+<div class="breadcrumb" id="bc"><span class="cur">World Map</span></div>
+
+<div class="map-wrap" id="mapWrap">
+  <img id="mapImg" src="Solmyra.png" alt="The Far Lands world map" />
+
+  <svg id="hotspotSvg" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="rg_red"      gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(220,80,80,0.6)"/><stop offset="100%" stop-color="rgba(220,80,80,0)"/></radialGradient>
+      <radialGradient id="rg_blue"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(80,140,220,0.6)"/><stop offset="100%" stop-color="rgba(80,140,220,0)"/></radialGradient>
+      <radialGradient id="rg_lime"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(80,200,80,0.6)"/><stop offset="100%" stop-color="rgba(80,200,80,0)"/></radialGradient>
+      <radialGradient id="rg_teal"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(30,200,180,0.6)"/><stop offset="100%" stop-color="rgba(30,200,180,0)"/></radialGradient>
+      <radialGradient id="rg_orange"   gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(220,140,40,0.6)"/><stop offset="100%" stop-color="rgba(220,140,40,0)"/></radialGradient>
+      <radialGradient id="rg_purple"   gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(150,80,220,0.6)"/><stop offset="100%" stop-color="rgba(150,80,220,0)"/></radialGradient>
+      <radialGradient id="rg_pink"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(220,100,160,0.6)"/><stop offset="100%" stop-color="rgba(220,100,160,0)"/></radialGradient>
+      <radialGradient id="rg_farlands" gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(100,180,100,0.6)"/><stop offset="100%" stop-color="rgba(100,180,100,0)"/></radialGradient>
+    </defs>
+  </svg>
+
+  <div class="tip" id="tip"></div>
+</div>
+
+<div id="infoBox"><p class="hint">Click any region to explore it.</p></div>
+
+
+<script>
+const REGIONS = [
+  {
+    id: "red",
+    name: "Region Name",
+    type: "Kingdom Type",
+    grad: "rg_red",
+    desc: "Describe this region here.",
+    tags: ["Tag 1", "Tag 2"],
+    lx: 1430, ly: 960,
+    pts: "1289,648 1455,682 1655,831 1618,912 1662,990 1669,1065 1655,1139 1642,1197 1611,1248 1564,1289 1527,1326 1503,1387 1486,1458 1476,1492 1421,1495 1381,1519 1360,1560 1350,1604 1306,1607 1265,1584 1225,1573 1191,1516 1198,1468 1235,1424 1262,1407 1249,1370 1276,1346 1303,1322 1292,1278 1282,1221 1296,1190 1326,1146 1357,1082 1343,1051 1303,1041 1279,1038 1231,1034 1221,990 1248,970 1235,949 1197,936 1225,885 1208,851 1180,804 1187,756 1218,702 1265,671"
+  },
+  {
+    id: "blue",
+    name: "Region Name",
+    type: "Kingdom Type",
+    grad: "rg_blue",
+    desc: "Describe this region here.",
+    tags: ["Tag 1", "Tag 2"],
+    lx: 1550, ly: 570,
+    pts: "1650,812 1650,748 1656,678 1623,635 1618,602 1656,592 1656,511 1640,468 1613,408 1618,371 1623,317 1672,279 1645,252 1564,279 1526,301 1526,355 1505,376 1456,365 1429,382 1429,435 1489,446 1510,495 1532,527 1467,532 1435,565 1386,608 1300,635 1467,683 1613,791"
+  },
+  {
+    id: "lime",
+    name: "Region Name",
+    type: "Kingdom Type",
+    grad: "rg_lime",
+    desc: "Describe this region here.",
+    tags: ["Tag 1", "Tag 2"],
+    lx: 1900, ly: 1050,
+    pts: "1664,851 1736,847 1800,800 1834,806 1878,830 1936,827 1969,851 2081,837 2108,847 2108,881 2146,912 2108,932 2112,983 2115,1040 2122,1101 2122,1135 2129,1169 2047,1213 2020,1244 2000,1308 1990,1329 1976,1346 1919,1308 1915,1288 1885,1288 1847,1308 1800,1322 1763,1335 1746,1373 1712,1400 1664,1441 1603,1474 1580,1491 1536,1502 1495,1495 1498,1424 1522,1346 1563,1305 1614,1268 1651,1196 1668,1107 1678,1032 1661,994 1628,960 1621,940 1645,886 1642,869"
+  },
+  {
+    id: "teal",
+    name: "Region Name",
+    type: "Kingdom Type",
+    grad: "rg_teal",
+    desc: "Describe this region here.",
+    tags: ["Tag 1", "Tag 2"],
+    lx: 2650, ly: 700,
+    pts: "2822,151 2754,164 2662,144 2588,208 2503,242 2459,232 2408,246 2367,266 2320,286 2344,314 2371,358 2364,395 2354,419 2323,439 2289,514 2289,537 2296,619 2262,690 2262,731 2273,839 2306,931 2340,961 2374,988 2469,1049 2493,1066 2540,1100 2591,1121 2611,1127 2649,1154 2696,1178 2720,1171 2747,1076 2794,1019 2886,934 2937,904 2967,883 2971,849 2988,822 2965,788 2995,758 3009,727 2998,706 2988,679 2943,698 2906,678 2891,658 2914,631 2907,570 2907,533 2921,519 2958,516 2989,495 3019,475 3033,434 3043,401 3016,336 3009,299 2974,281 2938,237 2886,194"
+  },
+  {
+    id: "orange",
+    name: "Region Name",
+    type: "Kingdom Type",
+    grad: "rg_orange",
+    desc: "Describe this region here.",
+    tags: ["Tag 1", "Tag 2"],
+    lx: 3100, ly: 1050,
+    pts: "3000,671 3030,623 3057,576 3091,552 3095,593 3101,650 3105,701 3112,728 3156,766 3196,755 3207,698 3224,664 3274,633 3308,616 3379,599 3400,647 3410,688 3396,735 3376,762 3316,724 3329,668 3261,712 3261,746 3274,810 3291,844 3291,885 3366,895 3410,899 3457,932 3461,990 3444,1027 3427,1072 3413,1126 3379,1173 3359,1180 3342,1197 3362,1238 3393,1255 3420,1268 3437,1289 3407,1346 3407,1370 3413,1421 3400,1451 3369,1472 3325,1489 3301,1523 3274,1543 3220,1489 3213,1438 3166,1428 3095,1438 3054,1438 3017,1441 2983,1428 2946,1404 2891,1377 2851,1346 2813,1319 2793,1289 2763,1261 2691,1241 2691,1200 2734,1156 2756,1092 2769,1048 2812,1000 2856,966 2894,932 2931,905 2961,882 3000,865 3000,834 2983,810 2987,790 3011,766 3031,726 3004,719 3006,702"
+  },
+  {
+    id: "purple",
+    name: "Region Name",
+    type: "Kingdom Type",
+    grad: "rg_purple",
+    desc: "Describe this region here.",
+    tags: ["Tag 1", "Tag 2"],
+    lx: 2750, ly: 1750,
+    pts: "2863,1634 2826,1577 2772,1539 2704,1495 2660,1448 2622,1377 2521,1278 2402,1333 2378,1377 2337,1370 2310,1400 2303,1431 2273,1431 2232,1458 2266,1523 2320,1594 2375,1614 2388,1682 2402,1753 2439,1790 2449,1834 2487,1916 2565,1933 2646,1970 2670,1970 2687,1943 2820,1970 2877,1970 2931,1960 3009,1957 3033,1943 3101,1953 3159,1970 3230,1950 3267,1909 3281,1841 3271,1780 3257,1736 3230,1695 3196,1668 3196,1634 3166,1624 3108,1655 3081,1631 2999,1604 2962,1624 2898,1638"
+  },
+  {
+    id: "pink",
+    name: "Region Name",
+    type: "Kingdom Type",
+    grad: "rg_pink",
+    desc: "Describe this region here.",
+    tags: ["Tag 1", "Tag 2"],
+    lx: 1480, ly: 1830,
+    pts: "1416,1573 1396,1597 1379,1627 1358,1648 1331,1661 1335,1692 1331,1712 1294,1749 1287,1773 1260,1773 1192,1800 1196,1854 1199,1909 1219,1970 1233,2007 1287,1997 1328,2010 1386,2034 1443,2027 1501,2027 1531,2058 1593,2014 1633,1997 1671,1963 1725,1837 1728,1800 1704,1709 1704,1658 1671,1614 1633,1597 1613,1583 1585,1583 1524,1604 1480,1580 1459,1563 1435,1556"
+  },
+  {
+    id: "greenisles",
+    name: "The Green Isles",
+    type: "Western Archipelago",
+    grad: "rg_farlands",
+    desc: "Describe this region here.",
+    tags: ["Tag 1", "Tag 2"],
+    lx: 550, ly: 1170,
+    // Note: island coords are at ~1/4 scale (traced on a smaller copy of the map).
+    // They are scaled up 4x below in the engine to match the 3840x2160 viewBox.
+    shapes: [
+      "621,1958 685,1948 743,1914 774,1860 797,1809 882,1704 906,1680 919,1596 872,1507 814,1514 665,1558 618,1514 570,1494 495,1521 465,1572 434,1619 411,1697 390,1738 295,1877 305,1942 351,1948 453,1958 520,1965 584,1972",
+      "499,1344 547,1392 587,1375 648,1334 672,1277 706,1229 727,1165 750,1161 784,1094 805,1029 808,978 788,948 781,927 750,924 699,951 672,992 655,1019 537,1036 442,1039 377,1063 323,1073 323,1158 316,1209 340,1294 370,1334 404,1351",
+      "204,805 275,751 313,673 333,639 309,568 296,534 255,524 218,537 174,592 136,619 99,649 92,741 146,792",
+      "387,381 442,381 469,344 503,293 506,242 469,232 435,209 397,198 323,188 289,215 269,283 340,348"
+    ],
+       // multiply all island coords by this to fit the 3840x2160 viewBox
+  }
+];
+
+
+// ================================================================
+// ENGINE
+// ================================================================
+
+// Convert a coord string into SVG points format, with optional scale
+function toSvgPoints(str, scale) {
+  scale = scale || 1;
+  // Handles both "x,y x,y" and "x,y,x,y,x,y" formats from image-map.net
+  const nums = str.trim().split(/[\s,]+/).map(Number);
+  const pairs = [];
+  for (let i = 0; i < nums.length; i += 2) {
+    pairs.push((nums[i] * scale) + ',' + (nums[i+1] * scale));
+  }
+  return pairs.join(' ');
+}
+
+// Get all [x,y] pairs across all shapes in a region
+function allCoords(r) {
+  const scale = r.scale || 1;
+  const sources = r.shapes || [r.pts];
+  return sources.flatMap(s => {
+    const nums = s.trim().split(/[\s,]+/).map(Number);
+    const pairs = [];
+    for (let i = 0; i < nums.length; i += 2) pairs.push([nums[i] * scale, nums[i+1] * scale]);
+    return pairs;
+  });
+}
+
+let activeRegion = null;
+const tip  = document.getElementById('tip');
+const svg  = document.getElementById('hotspotSvg');
+const wrap = document.getElementById('mapWrap');
+const info = document.getElementById('infoBox');
+const bc   = document.getElementById('bc');
+
+REGIONS.forEach(r => {
+  const sources = r.shapes || [r.pts];
+
+  // Each shape gets its own gradient centred on its own bounding box.
+  // Single-shape regions just update the base gradient directly.
+  const gradIds = sources.map((src, i) => {
+    const nums = src.trim().split(/[\s,]+/).map(Number);
+    const pairs = [];
+    for (let j = 0; j < nums.length; j += 2) pairs.push([nums[j] * (r.scale||1), nums[j+1] * (r.scale||1)]);
+    const xs = pairs.map(p => p[0]), ys = pairs.map(p => p[1]);
+    const minX = Math.min(...xs), maxX = Math.max(...xs);
+    const minY = Math.min(...ys), maxY = Math.max(...ys);
+    const w = maxX - minX, h = maxY - minY;
+
+    const base = svg.querySelector(`#${r.grad}`);
+    if (!base) return r.grad;
+
+    if (sources.length === 1) {
+      base.setAttribute('cx', minX + w / 2);
+      base.setAttribute('cy', minY + h / 2);
+      base.setAttribute('r',  Math.max(w, h) / 2);
+      return r.grad;
+    }
+
+    const gradId = `${r.grad}_${i}`;
+    let clone = svg.querySelector(`#${gradId}`);
+    if (!clone) {
+      clone = base.cloneNode(true);
+      clone.setAttribute('id', gradId);
+      base.parentNode.appendChild(clone);
+    }
+    clone.setAttribute('cx', minX + w / 2);
+    clone.setAttribute('cy', minY + h / 2);
+    clone.setAttribute('r',  Math.max(w, h) / 2);
+    return gradId;
+  });
+
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.classList.add('hotspot');
+
+  const polys = sources.map((src, i) => {
+    const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+    poly.setAttribute('points', toSvgPoints(src, r.scale));
+    poly.style.fill   = 'transparent';
+    poly.style.stroke = 'none';
+    poly._gradId = gradIds[i];
+    g.appendChild(poly);
+    return poly;
+  });
+
+  // Label
+  const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  lbl.classList.add('region-label');
+  lbl.setAttribute('x', (r.lx * (r.scale || 1)));
+  lbl.setAttribute('y', (r.ly * (r.scale || 1)));
+  lbl.textContent = r.name;
+  g.appendChild(lbl);
+
+  svg.appendChild(g);
+
+  // Hover any island — all light up, each with its own centred gradient
+  polys.forEach(poly => {
+    poly.addEventListener('mouseenter', () => {
+      polys.forEach(p => p.style.fill = `url(#${p._gradId})`);
+      tip.innerHTML = `<strong>${r.name}</strong><span>${r.type}</span>`;
+      tip.classList.add('show');
+    });
+    poly.addEventListener('mouseleave', () => {
+      polys.forEach(p => p.style.fill = 'transparent');
+      tip.classList.remove('show');
+    });
+  });
+  g.addEventListener('mousemove', e => {
+    const rect = wrap.getBoundingClientRect();
+    let x = e.clientX - rect.left + 14;
+    let y = e.clientY - rect.top  - 10;
+    if (x + 190 > rect.width) x = e.clientX - rect.left - 195;
+    tip.style.left = x + 'px';
+    tip.style.top  = y + 'px';
+  });
+  g.addEventListener('click', () => {
+    activeRegion = r;
+    bc.innerHTML = `<span class="crumb" onclick="clearRegion()">World Map</span>
+                    <span class="sep">›</span>
+                    <span class="cur">${r.name}</span>`;
+    info.innerHTML = `
+      <div class="info-panel">
+        <h2>${r.name}</h2>
+        <p>${r.desc}</p>
+        <div class="info-tags">${r.tags.map(t => `<span class="info-tag">${t}</span>`).join('')}</div>
+      </div>
+      <button class="develop-btn" onclick="askClaude('${r.name}')">+ Develop ${r.name}</button>`;
+  });
+});
+
+function clearRegion() {
+  activeRegion = null;
+  bc.innerHTML  = `<span class="cur">World Map</span>`;
+  info.innerHTML = `<p class="hint">Click any region to explore it.</p>`;
+}
+
+function askClaude(regionName) {
+  const prompt = `Flesh out ${regionName} in my D&D world — give it key locations, an NPC, and a quest hook.`;
+  if (typeof sendPrompt === 'function') sendPrompt(prompt);
+  else alert('Prompt: ' + prompt);
+}
+</script>
+
+</body>
+</html>
