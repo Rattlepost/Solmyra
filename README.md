@@ -1,1 +1,1 @@
-# solmyra.github.io
+# solmyra
