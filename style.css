@@ -1,3 +1,7 @@
+/* ================================================================
+   style.css — Solmyra map styles
+   ================================================================ */
+
 /* ── Reset ── */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -31,7 +35,7 @@ h1 {
 .breadcrumb .sep { color: #555; }
 .breadcrumb .cur { color: #e8e4dc; font-weight: 500; }
 
-/* ── Map container ── */
+/* ── World map layout ── */
 .map-outer {
   width: calc(100% - 340px);
   margin: 0 180px;
@@ -60,6 +64,13 @@ h1 {
   width: 100%; height: 100%;
 }
 
+/* ── Drilldown split layout ── */
+.drilldown-layout { display: flex; gap: 16px; align-items: flex-start; }
+.drilldown-layout .map-outer { flex: 0 0 calc(66.666% - 8px); margin: 0; width: auto; height: 80vh; }
+.drilldown-sidebar { flex: 0 0 calc(33.333% - 8px); min-width: 0; }
+.drilldown-sidebar .info-panel { margin-top: 0; }
+.drilldown-sidebar .hint { margin-top: 0; }
+
 /* ── Hotspots ── */
 .hotspot { cursor: pointer; }
 .hotspot polygon { fill: transparent; stroke: none; transition: fill 0.5s ease; }
@@ -67,7 +78,7 @@ h1 {
 /* ── Region labels ── */
 .region-label {
   pointer-events: none;
-  font-size: 72px;
+  font-size: 42px;
   font-weight: 600;
   font-family: system-ui, sans-serif;
   fill: transparent;
@@ -122,6 +133,7 @@ h1 {
   background: #1e293b;
 }
 
+/* ── Develop button ── */
 .develop-btn {
   margin-top: 12px;
   display: inline-flex;
