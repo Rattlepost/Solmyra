@@ -135,14 +135,7 @@
           const base = svg.querySelector(`#${r.grad}`);
           if (!base) return r.grad;
 
-          if (sources.length === 1) {
-            base.setAttribute('cx', cx);
-            base.setAttribute('cy', cy);
-            base.setAttribute('r', r_size);
-            return r.grad;
-          }
-
-          const gradId = `${r.grad}_${i}`;
+          const gradId = `${r.grad}_${r.id}_${i}`;
           let clone = svg.querySelector(`#${gradId}`);
           if (!clone) {
             clone = base.cloneNode(true);
@@ -362,7 +355,7 @@
     renderRegions(REGIONS, false);
 
 
-    
+
 
   </script>
 </body>
