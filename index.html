@@ -1,363 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solmyra</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <h1>Solmyra</h1>
-  <div class="breadcrumb" id="bc"><span class="cur">World Map</span></div>
+<h1>Solmyra</h1>
+<div class="breadcrumb" id="bc"><span class="cur">World Map</span></div>
 
-  <div id="pageLayout">
-    <div class="map-outer" id="mapOuter">
-      <div class="map-wrap" id="mapWrap">
-        <img id="mapImg" src="Solmyra.png" alt="Solmyra world map" />
-        <svg id="hotspotSvg" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <radialGradient id="rg_red" gradientUnits="userSpaceOnUse">
-              <stop offset="20%" stop-color="rgba(220,80,80,0.6)" />
-              <stop offset="100%" stop-color="rgba(220,80,80,0)" />
-            </radialGradient>
-            <radialGradient id="rg_blue" gradientUnits="userSpaceOnUse">
-              <stop offset="20%" stop-color="rgba(80,140,220,0.6)" />
-              <stop offset="100%" stop-color="rgba(80,140,220,0)" />
-            </radialGradient>
-            <radialGradient id="rg_lime" gradientUnits="userSpaceOnUse">
-              <stop offset="20%" stop-color="rgba(80,200,80,0.6)" />
-              <stop offset="100%" stop-color="rgba(80,200,80,0)" />
-            </radialGradient>
-            <radialGradient id="rg_teal" gradientUnits="userSpaceOnUse">
-              <stop offset="20%" stop-color="rgba(30,200,180,0.6)" />
-              <stop offset="100%" stop-color="rgba(30,200,180,0)" />
-            </radialGradient>
-            <radialGradient id="rg_orange" gradientUnits="userSpaceOnUse">
-              <stop offset="20%" stop-color="rgba(220,140,40,0.6)" />
-              <stop offset="100%" stop-color="rgba(220,140,40,0)" />
-            </radialGradient>
-            <radialGradient id="rg_purple" gradientUnits="userSpaceOnUse">
-              <stop offset="20%" stop-color="rgba(150,80,220,0.6)" />
-              <stop offset="100%" stop-color="rgba(150,80,220,0)" />
-            </radialGradient>
-            <radialGradient id="rg_pink" gradientUnits="userSpaceOnUse">
-              <stop offset="20%" stop-color="rgba(220,100,160,0.6)" />
-              <stop offset="100%" stop-color="rgba(220,100,160,0)" />
-            </radialGradient>
-            <radialGradient id="rg_farlands" gradientUnits="userSpaceOnUse">
-              <stop offset="20%" stop-color="rgba(100,180,100,0.6)" />
-              <stop offset="100%" stop-color="rgba(100,180,100,0)" />
-            </radialGradient>
-            <radialGradient id="rg_poi" gradientUnits="userSpaceOnUse">
-              <stop offset="10%" stop-color="rgba(100,100,100,0.5)" />
-              <stop offset="100%" stop-color="rgba(0,0,0,0)" />
-            </radialGradient>
-          </defs>
-        </svg>
-        <div class="tip" id="tip"></div>
-      </div>
+<div id="pageLayout">
+  <div class="map-outer" id="mapOuter">
+    <div class="map-wrap" id="mapWrap">
+      <img id="mapImg" src="Solmyra.png" alt="Solmyra world map" />
+      <svg id="hotspotSvg" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="rg_red"      gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(220,80,80,0.6)"/><stop offset="100%" stop-color="rgba(220,80,80,0)"/></radialGradient>
+          <radialGradient id="rg_blue"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(80,140,220,0.6)"/><stop offset="100%" stop-color="rgba(80,140,220,0)"/></radialGradient>
+          <radialGradient id="rg_lime"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(80,200,80,0.6)"/><stop offset="100%" stop-color="rgba(80,200,80,0)"/></radialGradient>
+          <radialGradient id="rg_teal"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(30,200,180,0.6)"/><stop offset="100%" stop-color="rgba(30,200,180,0)"/></radialGradient>
+          <radialGradient id="rg_orange"   gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(220,140,40,0.6)"/><stop offset="100%" stop-color="rgba(220,140,40,0)"/></radialGradient>
+          <radialGradient id="rg_purple"   gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(150,80,220,0.6)"/><stop offset="100%" stop-color="rgba(150,80,220,0)"/></radialGradient>
+          <radialGradient id="rg_pink"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(220,100,160,0.6)"/><stop offset="100%" stop-color="rgba(220,100,160,0)"/></radialGradient>
+          <radialGradient id="rg_farlands" gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(100,180,100,0.6)"/><stop offset="100%" stop-color="rgba(100,180,100,0)"/></radialGradient>
+          <radialGradient id="rg_poi"      gradientUnits="userSpaceOnUse"><stop offset="10%" stop-color="rgba(100,100,100,0.5)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
+        </defs>
+      </svg>
     </div>
-    <div id="infoBox">
-      <p class="hint">Click any region to explore it.</p>
-    </div>
+    <div class="tip" id="tip"></div>
   </div>
+  <div id="infoBox"><p class="hint">Click any region to explore it.</p></div>
+</div>
 
-  <!-- ─ Data files ──────────────────────────────────────────────────
-     Load sub-region files BEFORE data.js so they're available
-     when data.js references them. Add a new <script> here each
-     time you create a new regions/xyz.js file.
--->
-  <script src="regions/grennmoor.js"></script>
-  <script src="data.js"></script>
+<!-- Sub-region data files — load BEFORE data.js. Add one line per region file. -->
+<script src="regions/grennmoor.js"></script>
+<script src="data.js"></script>
 
-  <!-- ─ Engine (no need to edit below this line) ───────────────── -->
-  <script>
+<script>
+// ═══════════════════════════════════════════════════════════════
+// ENGINE — no need to edit this file for content changes
+// ═══════════════════════════════════════════════════════════════
 
-    // ── Helpers ──────────────────────────────────────────────────────
+// ── DOM refs ─────────────────────────────────────────────────────
+const svg   = document.getElementById('hotspotSvg');
+const wrap  = document.getElementById('mapWrap');
+const outer = document.getElementById('mapOuter');
+const info  = document.getElementById('infoBox');
+const bc    = document.getElementById('bc');
+const tip   = document.getElementById('tip');
+const mapImg = document.getElementById('mapImg');
 
-    function toSvgPoints(str, scale) {
-      scale = scale || 1;
-      const nums = str.trim().split(/[\s,]+/).map(Number);
-      const pairs = [];
-      for (let i = 0; i < nums.length; i += 2)
-        pairs.push((nums[i] * scale) + ',' + (nums[i + 1] * scale));
-      return pairs.join(' ');
-    }
+// ── Nav state ────────────────────────────────────────────────────
+let navStack = [];
 
-    // ── State ────────────────────────────────────────────────────────
+// ── Pan/zoom state ───────────────────────────────────────────────
+let scale = 1, tx = 0, ty = 0;
+let dragging = false, dragX = 0, dragY = 0, clickMoved = false;
 
-    const tip = document.getElementById('tip');
-    const svg = document.getElementById('hotspotSvg');
-    const wrap = document.getElementById('mapWrap');
-    const info = document.getElementById('infoBox');
-    const bc = document.getElementById('bc');
 
-    // Breadcrumb stack: [{label, action}]
-    let navStack = [];
+// ════════════════════════════════════════════════════════════════
+// RENDERING
+// ════════════════════════════════════════════════════════════════
 
-    // ── Render a set of regions onto the SVG ─────────────────────────
+function renderRegions(regions, showTooltips = false) {
+  // Remove all hotspots, keep <defs>
+  Array.from(svg.children).forEach(el => { if (el.tagName !== 'defs') el.remove(); });
 
-    function renderRegions(regions, showTooltips = false) {
-      // Clear existing hotspots (keep <defs>)
-      Array.from(svg.children).forEach(el => {
-        if (el.tagName !== 'defs') el.remove();
-      });
+  regions.forEach(r => {
+    const sources = r.shapes || [r.pts];
+    const sc      = r.scale || 1;
 
-      regions.forEach(r => {
-        const sources = r.shapes || [r.pts];
+    const gradIds = sources.map((src, i) => buildGradient(src, sc, r, i));
+    const g       = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.classList.add('hotspot');
 
-        // Per-shape gradients centred on each shape's bounding box
-        const gradIds = sources.map((src, i) => {
-          const nums = src.trim().split(/[\s,]+/).map(Number);
-          let cx, cy, r_size;
-          if (nums.length === 3) {
-            // Circle: use its own centre and radius directly
-            cx = nums[0] * (r.scale || 1);
-            cy = nums[1] * (r.scale || 1);
-            r_size = nums[2] * (r.scale || 1);
-          } else {
-            // Polygon: derive from bounding box as before
-            const pairs = [];
-            for (let j = 0; j < nums.length; j += 2)
-              pairs.push([nums[j] * (r.scale || 1), nums[j + 1] * (r.scale || 1)]);
-            const xs = pairs.map(p => p[0]), ys = pairs.map(p => p[1]);
-            const minX = Math.min(...xs), maxX = Math.max(...xs);
-            const minY = Math.min(...ys), maxY = Math.max(...ys);
-            const w = maxX - minX, h = maxY - minY;
-            cx = minX + w / 2;
-            cy = minY + h / 2;
-            r_size = Math.max(w, h) / 2;
-          }
+    const shapes = sources.map((src, i) => {
+      const el = buildShape(src, sc);
+      el.style.fill   = 'transparent';
+      el.style.stroke = 'none';
+      el._gradId = gradIds[i];
+      g.appendChild(el);
+      return el;
+    });
 
-          const base = svg.querySelector(`#${r.grad}`);
-          if (!base) return r.grad;
+    // Label
+    const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    lbl.classList.add('region-label');
+    lbl.setAttribute('x', r.lx * sc);
+    lbl.setAttribute('y', r.ly * sc);
+    lbl.textContent = r.name;
+    g.appendChild(lbl);
 
-          const gradId = `${r.grad}_${r.id}_${i}`;
-          let clone = svg.querySelector(`#${gradId}`);
-          if (!clone) {
-            clone = base.cloneNode(true);
-            clone.setAttribute('id', gradId);
-            base.parentNode.appendChild(clone);
-          }
-          clone.setAttribute('cx', cx);
-          clone.setAttribute('cy', cy);
-          clone.setAttribute('r', r_size);
-          return gradId;
-        });
+    attachHoverListeners(g, shapes, r, showTooltips);
+    attachClickListener(shapes, r);
 
-        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        g.classList.add('hotspot');
+    svg.appendChild(g);
+  });
+}
 
-        const polys = sources.map((src, i) => {
-          const nums = src.trim().split(/[\s,]+/).map(Number);
-          let poly;
-          if (nums.length === 3) {
-            // Circle: cx, cy, radius
-            poly = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-            poly.setAttribute('cx', nums[0] * (r.scale || 1));
-            poly.setAttribute('cy', nums[1] * (r.scale || 1));
-            poly.setAttribute('r', nums[2] * (r.scale || 1));
-          } else {
-            // Polygon
-            poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-            poly.setAttribute('points', toSvgPoints(src, r.scale));
-          }
-          poly.style.fill = 'transparent';
-          poly.style.stroke = 'none';
-          poly._gradId = gradIds[i];
-          g.appendChild(poly);
-          return poly;
-        });
+function buildShape(src, sc) {
+  const nums = src.trim().split(/[\s,]+/).map(Number);
+  if (nums.length === 3) {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    el.setAttribute('cx', nums[0] * sc);
+    el.setAttribute('cy', nums[1] * sc);
+    el.setAttribute('r',  nums[2] * sc);
+    return el;
+  }
+  const el = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+  el.setAttribute('points', nums.map((n, i) => n * sc + (i % 2 === 0 ? ',' : ' ')).join('').trim());
+  return el;
+}
 
-        // Label
-        const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        lbl.classList.add('region-label');
-        lbl.setAttribute('x', r.lx * (r.scale || 1));
-        lbl.setAttribute('y', r.ly * (r.scale || 1));
-        lbl.textContent = r.name;
-        g.appendChild(lbl);
+function buildGradient(src, sc, r, i) {
+  const nums = src.trim().split(/[\s,]+/).map(Number);
+  let cx, cy, radius;
 
-        svg.appendChild(g);
+  if (nums.length === 3) {
+    cx = nums[0] * sc; cy = nums[1] * sc; radius = nums[2] * sc;
+  } else {
+    const xs = [], ys = [];
+    for (let j = 0; j < nums.length; j += 2) { xs.push(nums[j] * sc); ys.push(nums[j+1] * sc); }
+    const minX = Math.min(...xs), maxX = Math.max(...xs);
+    const minY = Math.min(...ys), maxY = Math.max(...ys);
+    cx = (minX + maxX) / 2; cy = (minY + maxY) / 2;
+    radius = Math.max(maxX - minX, maxY - minY) / 2;
+  }
 
-        // Hover
-        polys.forEach(poly => {
-          poly.addEventListener('mouseenter', () => {
-            polys.forEach(p => p.style.fill = `url(#${p._gradId})`);
-            if (showTooltips) {
-              tip.innerHTML = `<strong>${r.name}</strong><span>${r.type}</span>`;
-              tip.classList.add('show');
-            }
-          });
-          poly.addEventListener('mouseleave', () => {
-            polys.forEach(p => p.style.fill = 'transparent');
-            tip.classList.remove('show');
-          });
-        });
+  const base = svg.querySelector(`#${r.grad}`);
+  if (!base) return r.grad;
 
-        g.addEventListener('mousemove', e => {
-          const rect = wrap.getBoundingClientRect();
-          let x = e.clientX - rect.left + 14;
-          let y = e.clientY - rect.top - 10;
-          if (x + 190 > rect.width) x = e.clientX - rect.left - 195;
-          tip.style.left = x + 'px';
-          tip.style.top = y + 'px';
-        });
+  const gradId = `${r.grad}_${r.id}_${i}`;
+  let clone = svg.querySelector(`#${gradId}`);
+  if (!clone) {
+    clone = base.cloneNode(true);
+    clone.setAttribute('id', gradId);
+    base.parentNode.appendChild(clone);
+  }
+  clone.setAttribute('cx', cx);
+  clone.setAttribute('cy', cy);
+  clone.setAttribute('r',  radius);
+  return gradId;
+}
 
-        // Click
-        polys.forEach(poly => {
-          poly.addEventListener('click', () => {
-            if (clickMoved) return;   // ← add this line
-            renderInfoPanel(r);
-            if (r.drilldown) drillInto(r);
-          });
-        });
-      });
-    }
+function attachHoverListeners(g, shapes, r, showTooltips) {
+  shapes.forEach(s => {
+    s.addEventListener('mouseenter', () => {
+      shapes.forEach(p => p.style.fill = `url(#${p._gradId})`);
+      if (showTooltips) {
+        tip.innerHTML = `<strong>${r.name}</strong><span>${r.type}</span>`;
+        tip.classList.add('show');
+      }
+    });
+    s.addEventListener('mouseleave', () => {
+      shapes.forEach(p => p.style.fill = 'transparent');
+      tip.classList.remove('show');
+    });
+  });
 
-    // ── Info panel ───────────────────────────────────────────────────
+  g.addEventListener('mousemove', e => {
+    const rect = outer.getBoundingClientRect();
+    let x = e.clientX - rect.left + 14;
+    let y = e.clientY - rect.top  - 10;
+    if (x + 190 > rect.width) x = e.clientX - rect.left - 195;
+    tip.style.left = x + 'px';
+    tip.style.top  = y + 'px';
+  });
+}
 
-    function renderInfoPanel(r) {
-      info.innerHTML = `
+function attachClickListener(shapes, r) {
+  shapes.forEach(s => {
+    s.addEventListener('click', () => {
+      if (clickMoved) return;
+      renderInfoPanel(r);
+      if (r.drilldown) drillInto(r);
+    });
+  });
+}
+
+function renderInfoPanel(r) {
+  info.innerHTML = `
     <div class="info-panel">
       <h2>${r.name}</h2>
       <p style="white-space: pre-line">${r.desc}</p>
       <div class="info-tags">${r.tags.map(t => `<span class="info-tag">${t}</span>`).join('')}</div>
-    </div>
-    `
-    }
+    </div>`;
+}
 
-    // ── Drilldown ────────────────────────────────────────────────────
 
-    function drillInto(r) {
-      const drilldown = r.drilldown; // the imported JS object from regions/xyz.js
+// ════════════════════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════════════════════
 
-      // Push current state onto nav stack so we can go back
-      navStack.push({
-        label: r.name,
-        map: document.getElementById('mapImg').src,
-        viewBox: svg.getAttribute('viewBox'),
-        regions: REGIONS, // world-level regions
-        infoHtml: info.innerHTML
-      });
+function drillInto(r) {
+  navStack.push({
+    label:           r.name,
+    map:             mapImg.src,
+    viewBox:         svg.getAttribute('viewBox'),
+    drilldownRegions: r.drilldown.regions,
+    infoHtml:        info.innerHTML
+  });
 
-      // Switch map image and viewBox
-      document.getElementById('mapImg').src = drilldown.map;
-      svg.setAttribute('viewBox', drilldown.viewBox);
+  mapImg.src = r.drilldown.map;
+  svg.setAttribute('viewBox', r.drilldown.viewBox);
+  document.getElementById('pageLayout').classList.add('drilldown-layout');
+  document.getElementById('infoBox').classList.add('drilldown-sidebar');
 
-      // Switch to split layout
-      document.getElementById('pageLayout').classList.add('drilldown-layout');
-      document.getElementById('infoBox').classList.add('drilldown-sidebar');
+  renderRegions(r.drilldown.regions, true);
+  renderBreadcrumb();
+  resetView();
+}
 
-      // Render sub-regions
-      renderRegions(drilldown.regions, true);
-
-      // Update breadcrumb
-      renderBreadcrumb();
-
-      // Reset pan/zoom
-      scale = 1; tx = 0; ty = 0;
-      applyTransform();
-    }
-
-    // ── Navigation / breadcrumb ──────────────────────────────────────
-
-    function renderBreadcrumb() {
-      let html = `<span class="crumb" onclick="goToDepth(0)">World Map</span>`;
-      navStack.forEach((entry, i) => {
-        html += `<span class="sep">›</span>
-             <span class="crumb" onclick="goToDepth(${i + 1})">${entry.label}</span>`;
-      });
-      // Current level label (last drilldown's region name, or nothing at world level)
-      bc.innerHTML = html;
-    }
-
-    function goToDepth(depth) {
-      if (depth === 0) {
-        // Back to world map
-        navStack = [];
-        document.getElementById('pageLayout').classList.remove('drilldown-layout');
-        document.getElementById('infoBox').classList.remove('drilldown-sidebar');
-        document.getElementById('mapImg').src = 'Solmyra.png';
-        svg.setAttribute('viewBox', '0 0 3840 2160');
-        info.innerHTML = `<p class="hint">Click any region to explore it.</p>`;
-        renderRegions(REGIONS);
-        bc.innerHTML = `<span class="cur">World Map</span>`;
-      } else {
-        // Go back to a mid-stack level (for future multi-level drilldowns)
-        const entry = navStack[depth - 1];
-        navStack = navStack.slice(0, depth);
-        document.getElementById('mapImg').src = entry.map;
-        svg.setAttribute('viewBox', entry.viewBox);
-        info.innerHTML = entry.infoHtml;
-        renderRegions(entry.regions, depth > 0);
-        renderBreadcrumb();
-      }
-      scale = 1; tx = 0; ty = 0;
-      applyTransform();
-    }
-
-    function askClaude(regionName) {
-      const prompt = `Flesh out ${regionName} in my D&D world — give it key locations, an NPC, and a quest hook.`;
-      if (typeof sendPrompt === 'function') sendPrompt(prompt);
-      else alert('Prompt: ' + prompt);
-    }
-
-    // ── Pan / Zoom ───────────────────────────────────────────────────
-
-    const outer = document.getElementById('mapOuter');
-    const inner = document.getElementById('mapWrap');
-
-    let scale = 1, tx = 0, ty = 0;
-    let dragging = false, lastX = 0, lastY = 0;
-    let clickMoved = false;
-
-    function applyTransform() {
-      const ow = outer.clientWidth, oh = outer.clientHeight;
-      const iw = inner.clientWidth * scale, ih = inner.clientHeight * scale;
-      tx = Math.max(Math.min(0, ow - iw), Math.min(0, tx));
-      ty = Math.max(Math.min(0, oh - ih), Math.min(0, ty));
-      inner.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
-    }
-
-    outer.addEventListener('wheel', e => {
-      e.preventDefault();
-      const rect = outer.getBoundingClientRect();
-      const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-      const delta = e.deltaY < 0 ? 1.12 : 1 / 1.12;
-      const newScale = Math.min(8, Math.max(1, scale * delta));
-      tx = mx - (mx - tx) * (newScale / scale);
-      ty = my - (my - ty) * (newScale / scale);
-      scale = newScale;
-      applyTransform();
-    }, { passive: false });
-
-    outer.addEventListener('mousedown', e => {
-      dragging = true;
-      clickMoved = false;   // ← reset each time
-      lastX = e.clientX; lastY = e.clientY;
-      outer.style.cursor = 'grabbing';
-    });
-    window.addEventListener('mousemove', e => {
-      if (!dragging) return;
-      tx += e.clientX - lastX; ty += e.clientY - lastY;
-      lastX = e.clientX; lastY = e.clientY;
-      clickMoved = true;   // ← make sure this line is present
-      applyTransform();
-    });
-    window.addEventListener('mouseup', () => { dragging = false; outer.style.cursor = 'grab'; });
-
-    // ── Boot ─────────────────────────────────────────────────────────
-
-    // Boot (world map) — no tooltips
+function goToDepth(depth) {
+  if (depth === 0) {
+    navStack = [];
+    mapImg.src = 'Solmyra.png';
+    svg.setAttribute('viewBox', '0 0 3840 2160');
+    document.getElementById('pageLayout').classList.remove('drilldown-layout');
+    document.getElementById('infoBox').classList.remove('drilldown-sidebar');
+    info.innerHTML = `<p class="hint">Click any region to explore it.</p>`;
+    bc.innerHTML   = `<span class="cur">World Map</span>`;
     renderRegions(REGIONS, false);
+  } else {
+    const entry = navStack[depth - 1];
+    navStack = navStack.slice(0, depth);
+    mapImg.src = entry.map;
+    svg.setAttribute('viewBox', entry.viewBox);
+    info.innerHTML = entry.infoHtml;
+    renderRegions(entry.drilldownRegions, true);
+    renderBreadcrumb();
+  }
+  resetView();
+}
+
+function renderBreadcrumb() {
+  let html = `<span class="crumb" onclick="goToDepth(0)">World Map</span>`;
+  navStack.forEach((entry, i) => {
+    const isLast = i === navStack.length - 1;
+    html += `<span class="sep">›</span>` + (isLast
+      ? `<span class="cur">${entry.label}</span>`
+      : `<span class="crumb" onclick="goToDepth(${i + 1})">${entry.label}</span>`);
+  });
+  bc.innerHTML = html;
+}
 
 
+// ════════════════════════════════════════════════════════════════
+// PAN / ZOOM
+// ════════════════════════════════════════════════════════════════
+
+function applyTransform() {
+  const maxTx = Math.min(0, outer.clientWidth  - wrap.clientWidth  * scale);
+  const maxTy = Math.min(0, outer.clientHeight - wrap.clientHeight * scale);
+  tx = Math.max(maxTx, Math.min(0, tx));
+  ty = Math.max(maxTy, Math.min(0, ty));
+  wrap.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+}
+
+function resetView() { scale = 1; tx = 0; ty = 0; applyTransform(); }
+
+outer.addEventListener('wheel', e => {
+  e.preventDefault();
+  const rect  = outer.getBoundingClientRect();
+  const mx    = e.clientX - rect.left, my = e.clientY - rect.top;
+  const delta = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+  const next  = Math.min(8, Math.max(1, scale * delta));
+  tx = mx - (mx - tx) * (next / scale);
+  ty = my - (my - ty) * (next / scale);
+  scale = next;
+  applyTransform();
+}, { passive: false });
+
+outer.addEventListener('mousedown', e => {
+  dragging = true; clickMoved = false;
+  dragX = e.clientX; dragY = e.clientY;
+  outer.style.cursor = 'grabbing';
+});
+
+window.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  tx += e.clientX - dragX; ty += e.clientY - dragY;
+  dragX = e.clientX; dragY = e.clientY;
+  clickMoved = true;
+  applyTransform();
+});
+
+window.addEventListener('mouseup', () => { dragging = false; outer.style.cursor = 'grab'; });
 
 
-  </script>
+// ════════════════════════════════════════════════════════════════
+// BOOT
+// ════════════════════════════════════════════════════════════════
+
+renderRegions(REGIONS, false);
+
+</script>
 </body>
-
 </html>
