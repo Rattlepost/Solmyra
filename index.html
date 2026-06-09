@@ -1,338 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solmyra</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-<div id="welcome-overlay">
-  <div id="welcome-modal">
-    <h2>Welcome to Solmyra</h2>
-    <p>
-      Explore an interactive map of the world. Click any region to learn more,
-      and use scroll or pinch to zoom. Some regions contain detailed sub-maps.
-    </p>
-    <div class="modal-footer">
-      <label>
-        <input type="checkbox" id="dont-show-again">
-        Don't show this again
-      </label>
-      <button id="welcome-close">Enter</button>
+  <div id="welcome-overlay">
+    <div id="welcome-modal">
+      <h2>Welcome to Solmyra</h2>
+      <p>
+        Explore an interactive map of the world. Click any region to learn more,
+        and use scroll or pinch to zoom. Some regions contain detailed sub-maps.
+      </p>
+      <div class="modal-footer">
+        <label>
+          <input type="checkbox" id="dont-show-again">
+          Don't show this again
+        </label>
+        <button id="welcome-close">Enter</button>
+      </div>
     </div>
   </div>
-</div>
-<div id="site-header">
-  <div class="header-eyebrow">— Solmyra —</div>
-  <div class="header-title" id="header-title">THE WORLD MAP</div>
-  <div class="header-divider">
-    <div class="divider-line"></div>
-    <div class="divider-diamond"></div>
-    <div class="divider-line"></div>
-  </div>
-  <button class="header-back" id="header-back">← World Map</button>
-</div>
-
-<div id="pageLayout">
-  <div class="map-outer" id="mapOuter">
-    <div class="map-wrap" id="mapWrap">
-      <img id="mapImg" src="Solmyra.png" alt="Solmyra world map" />
-      <svg id="hotspotSvg" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="rg_red"      gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(220,80,80,0.6)"/><stop offset="100%" stop-color="rgba(220,80,80,0)"/></radialGradient>
-          <radialGradient id="rg_blue"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(80,140,220,0.6)"/><stop offset="100%" stop-color="rgba(80,140,220,0)"/></radialGradient>
-          <radialGradient id="rg_lime"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(80,200,80,0.6)"/><stop offset="100%" stop-color="rgba(80,200,80,0)"/></radialGradient>
-          <radialGradient id="rg_teal"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(30,200,180,0.6)"/><stop offset="100%" stop-color="rgba(30,200,180,0)"/></radialGradient>
-          <radialGradient id="rg_orange"   gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(220,140,40,0.6)"/><stop offset="100%" stop-color="rgba(220,140,40,0)"/></radialGradient>
-          <radialGradient id="rg_purple"   gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(150,80,220,0.6)"/><stop offset="100%" stop-color="rgba(150,80,220,0)"/></radialGradient>
-          <radialGradient id="rg_pink"     gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(220,100,160,0.6)"/><stop offset="100%" stop-color="rgba(220,100,160,0)"/></radialGradient>
-          <radialGradient id="rg_farlands" gradientUnits="userSpaceOnUse"><stop offset="20%" stop-color="rgba(100,180,100,0.6)"/><stop offset="100%" stop-color="rgba(100,180,100,0)"/></radialGradient>
-          <radialGradient id="rg_poi"      gradientUnits="userSpaceOnUse"><stop offset="10%" stop-color="rgba(100,100,100,0.5)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></radialGradient>
-        </defs>
-      </svg>
+  <div id="site-header">
+    <div class="header-eyebrow">— Solmyra —</div>
+    <div class="header-title" id="header-title">THE WORLD MAP</div>
+    <div class="header-divider">
+      <div class="divider-line"></div>
+      <div class="divider-diamond"></div>
+      <div class="divider-line"></div>
     </div>
-    <div class="tip" id="tip"></div>
+    <button class="header-back" id="header-back">← World Map</button>
   </div>
-  <div id="infoBox"><p class="hint"></p></div>
-</div>
 
-<script src="regions/grennmoor.js"></script>
-<script src="data.js"></script>
-<script src="welcome.js"></script>
-<script>
-// ═══════════════════════════════════════════════════════════════
-// ENGINE — no need to edit this file for content changes
-// ═══════════════════════════════════════════════════════════════
+  <div id="pageLayout">
+    <div class="map-outer" id="mapOuter">
+      <div id="mapThrobber" class="map-throbber">
+        <div class="throbber-title">Entering region</div>
+        <div class="throbber-bar"></div>
+      </div>
+      <div class="map-wrap" id="mapWrap">
+        <img id="mapImg" src="Solmyra.png" alt="Solmyra world map" />
+        <svg id="hotspotSvg" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="rg_red" gradientUnits="userSpaceOnUse">
+              <stop offset="20%" stop-color="rgba(220,80,80,0.6)" />
+              <stop offset="100%" stop-color="rgba(220,80,80,0)" />
+            </radialGradient>
+            <radialGradient id="rg_blue" gradientUnits="userSpaceOnUse">
+              <stop offset="20%" stop-color="rgba(80,140,220,0.6)" />
+              <stop offset="100%" stop-color="rgba(80,140,220,0)" />
+            </radialGradient>
+            <radialGradient id="rg_lime" gradientUnits="userSpaceOnUse">
+              <stop offset="20%" stop-color="rgba(80,200,80,0.6)" />
+              <stop offset="100%" stop-color="rgba(80,200,80,0)" />
+            </radialGradient>
+            <radialGradient id="rg_teal" gradientUnits="userSpaceOnUse">
+              <stop offset="20%" stop-color="rgba(30,200,180,0.6)" />
+              <stop offset="100%" stop-color="rgba(30,200,180,0)" />
+            </radialGradient>
+            <radialGradient id="rg_orange" gradientUnits="userSpaceOnUse">
+              <stop offset="20%" stop-color="rgba(220,140,40,0.6)" />
+              <stop offset="100%" stop-color="rgba(220,140,40,0)" />
+            </radialGradient>
+            <radialGradient id="rg_purple" gradientUnits="userSpaceOnUse">
+              <stop offset="20%" stop-color="rgba(150,80,220,0.6)" />
+              <stop offset="100%" stop-color="rgba(150,80,220,0)" />
+            </radialGradient>
+            <radialGradient id="rg_pink" gradientUnits="userSpaceOnUse">
+              <stop offset="20%" stop-color="rgba(220,100,160,0.6)" />
+              <stop offset="100%" stop-color="rgba(220,100,160,0)" />
+            </radialGradient>
+            <radialGradient id="rg_farlands" gradientUnits="userSpaceOnUse">
+              <stop offset="20%" stop-color="rgba(100,180,100,0.6)" />
+              <stop offset="100%" stop-color="rgba(100,180,100,0)" />
+            </radialGradient>
+            <radialGradient id="rg_poi" gradientUnits="userSpaceOnUse">
+              <stop offset="10%" stop-color="rgba(100,100,100,0.5)" />
+              <stop offset="100%" stop-color="rgba(0,0,0,0)" />
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="tip" id="tip"></div>
+    </div>
+    <div id="infoBox">
+      <p class="hint"></p>
+    </div>
+  </div>
 
-// ── DOM refs ─────────────────────────────────────────────────────
-const svg         = document.getElementById('hotspotSvg');
-const wrap        = document.getElementById('mapWrap');
-const outer       = document.getElementById('mapOuter');
-const info        = document.getElementById('infoBox');
-const tip         = document.getElementById('tip');
-const mapImg      = document.getElementById('mapImg');
-const headerTitle = document.getElementById('header-title');
-const headerBack  = document.getElementById('header-back');
+  <script src="regions/grennmoor.js"></script>
+  <script src="data.js"></script>
+  <script src="welcome.js"></script>
+  <script>
+    // ═══════════════════════════════════════════════════════════════
+    // ENGINE — no need to edit this file for content changes
+    // ═══════════════════════════════════════════════════════════════
 
-// ── Nav state ────────────────────────────────────────────────────
-let navStack = [];
+    // ── DOM refs ─────────────────────────────────────────────────────
+    const svg = document.getElementById('hotspotSvg');
+    const wrap = document.getElementById('mapWrap');
+    const outer = document.getElementById('mapOuter');
+    const info = document.getElementById('infoBox');
+    const tip = document.getElementById('tip');
+    const mapImg = document.getElementById('mapImg');
+    const headerTitle = document.getElementById('header-title');
+    const headerBack = document.getElementById('header-back');
+    const throbber = document.getElementById('mapThrobber');
 
-// ── Pan/zoom state ───────────────────────────────────────────────
-let scale = 1, tx = 0, ty = 0;
-let dragging = false, dragX = 0, dragY = 0, clickMoved = false;
-let rafPending = false;
+    // ── Nav state ────────────────────────────────────────────────────
+    let navStack = [];
+
+    // ── Pan/zoom state ───────────────────────────────────────────────
+    let scale = 1, tx = 0, ty = 0;
+    let dragging = false, dragX = 0, dragY = 0, clickMoved = false;
+    let rafPending = false;
+    let cachedOuterW = 0, cachedOuterH = 0, cachedWrapW = 0, cachedWrapH = 0;
+
+    function cacheDimensions() {
+      cachedOuterW = outer.clientWidth;
+      cachedOuterH = outer.clientHeight;
+      cachedWrapW  = wrap.clientWidth;
+      cachedWrapH  = wrap.clientHeight;
+    }
+
+    // ── Throbber ─────────────────────────────────────────────────────
+    let throbberTimer = null;
+
+    function showThrobber() {
+      if (throbberTimer) clearTimeout(throbberTimer);
+      throbber.classList.add('show');
+      throbberTimer = setTimeout(() => {
+        throbber.classList.remove('show');
+        throbberTimer = null;
+      }, 2000);
+    }
 
 
-// ════════════════════════════════════════════════════════════════
-// RENDERING
-// ════════════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
+    // RENDERING
+    // ════════════════════════════════════════════════════════════════
 
-function renderRegions(regions, showTooltips = false) {
-  Array.from(svg.children).forEach(el => { if (el.tagName !== 'defs') el.remove(); });
+    function renderRegions(regions, showTooltips = false) {
+      Array.from(svg.children).forEach(el => { if (el.tagName !== 'defs') el.remove(); });
 
-  regions.forEach(r => {
-    const sources = r.shapes || [r.pts];
-    const sc      = r.scale || 1;
+      regions.forEach(r => {
+        const sources = r.shapes || [r.pts];
+        const sc = r.scale || 1;
 
-    const gradIds = sources.map((src, i) => buildGradient(src, sc, r, i));
-    const g       = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-    g.classList.add('hotspot');
+        const gradIds = sources.map((src, i) => buildGradient(src, sc, r, i));
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.classList.add('hotspot');
 
-    const shapes = sources.map((src, i) => {
-      const el = buildShape(src, sc);
-      el.style.fill   = 'transparent';
-      el.style.stroke = 'none';
-      el._gradId = gradIds[i];
-      g.appendChild(el);
-      return el;
-    });
+        const shapes = sources.map((src, i) => {
+          const el = buildShape(src, sc);
+          el.style.fill = 'transparent';
+          el.style.stroke = 'none';
+          el._gradId = gradIds[i];
+          g.appendChild(el);
+          return el;
+        });
 
-    const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    lbl.classList.add('region-label');
-    lbl.setAttribute('x', r.lx * sc);
-    lbl.setAttribute('y', r.ly * sc);
-    lbl.textContent = r.name;
-    g.appendChild(lbl);
+        const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        lbl.classList.add('region-label');
+        lbl.setAttribute('x', r.lx * sc);
+        lbl.setAttribute('y', r.ly * sc);
+        lbl.textContent = r.name;
+        g.appendChild(lbl);
 
-    attachHoverListeners(g, shapes, r, showTooltips);
-    attachClickListener(shapes, r);
+        attachHoverListeners(g, shapes, r, showTooltips);
+        attachClickListener(shapes, r);
 
-    svg.appendChild(g);
-  });
-}
+        svg.appendChild(g);
+      });
+    }
 
-function buildShape(src, sc) {
-  const nums = src.trim().split(/[\s,]+/).map(Number);
-  if (nums.length === 3) {
-    const el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    el.setAttribute('cx', nums[0] * sc);
-    el.setAttribute('cy', nums[1] * sc);
-    el.setAttribute('r',  nums[2] * sc);
-    return el;
-  }
-  const el = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-  el.setAttribute('points', nums.map((n, i) => n * sc + (i % 2 === 0 ? ',' : ' ')).join('').trim());
-  return el;
-}
-
-function buildGradient(src, sc, r, i) {
-  const nums = src.trim().split(/[\s,]+/).map(Number);
-  let cx, cy, radius;
-
-  if (nums.length === 3) {
-    cx = nums[0] * sc; cy = nums[1] * sc; radius = nums[2] * sc;
-  } else {
-    const xs = [], ys = [];
-    for (let j = 0; j < nums.length; j += 2) { xs.push(nums[j] * sc); ys.push(nums[j+1] * sc); }
-    const minX = Math.min(...xs), maxX = Math.max(...xs);
-    const minY = Math.min(...ys), maxY = Math.max(...ys);
-    cx = (minX + maxX) / 2; cy = (minY + maxY) / 2;
-    radius = Math.max(maxX - minX, maxY - minY) / 2;
-  }
-
-  const base = svg.querySelector('#' + r.grad);
-  if (!base) return r.grad;
-
-  const gradId = r.grad + '_' + r.id + '_' + i;
-  let clone = svg.querySelector('#' + gradId);
-  if (!clone) {
-    clone = base.cloneNode(true);
-    clone.setAttribute('id', gradId);
-    base.parentNode.appendChild(clone);
-  }
-  clone.setAttribute('cx', cx);
-  clone.setAttribute('cy', cy);
-  clone.setAttribute('r',  radius);
-  return gradId;
-}
-
-function attachHoverListeners(g, shapes, r, showTooltips) {
-  shapes.forEach(s => {
-    s.addEventListener('mouseenter', () => {
-      shapes.forEach(p => p.style.fill = 'url(#' + p._gradId + ')');
-      if (showTooltips) {
-        tip.innerHTML = '<strong>' + r.name + '</strong><span>' + r.type + '</span>';
-        tip.classList.add('show');
+    function buildShape(src, sc) {
+      const nums = src.trim().split(/[\s,]+/).map(Number);
+      if (nums.length === 3) {
+        const el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        el.setAttribute('cx', nums[0] * sc);
+        el.setAttribute('cy', nums[1] * sc);
+        el.setAttribute('r', nums[2] * sc);
+        return el;
       }
+      const el = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      el.setAttribute('points', nums.map((n, i) => n * sc + (i % 2 === 0 ? ',' : ' ')).join('').trim());
+      return el;
+    }
+
+    function buildGradient(src, sc, r, i) {
+      const nums = src.trim().split(/[\s,]+/).map(Number);
+      let cx, cy, radius;
+
+      if (nums.length === 3) {
+        cx = nums[0] * sc; cy = nums[1] * sc; radius = nums[2] * sc;
+      } else {
+        const xs = [], ys = [];
+        for (let j = 0; j < nums.length; j += 2) { xs.push(nums[j] * sc); ys.push(nums[j + 1] * sc); }
+        const minX = Math.min(...xs), maxX = Math.max(...xs);
+        const minY = Math.min(...ys), maxY = Math.max(...ys);
+        cx = (minX + maxX) / 2; cy = (minY + maxY) / 2;
+        radius = Math.max(maxX - minX, maxY - minY) / 2;
+      }
+
+      const base = svg.querySelector('#' + r.grad);
+      if (!base) return r.grad;
+
+      const gradId = r.grad + '_' + r.id + '_' + i;
+      let clone = svg.querySelector('#' + gradId);
+      if (!clone) {
+        clone = base.cloneNode(true);
+        clone.setAttribute('id', gradId);
+        base.parentNode.appendChild(clone);
+      }
+      clone.setAttribute('cx', cx);
+      clone.setAttribute('cy', cy);
+      clone.setAttribute('r', radius);
+      return gradId;
+    }
+
+    function attachHoverListeners(g, shapes, r, showTooltips) {
+      shapes.forEach(s => {
+        s.addEventListener('mouseenter', () => {
+          shapes.forEach(p => p.style.fill = 'url(#' + p._gradId + ')');
+          if (showTooltips) {
+            tip.innerHTML = '<strong>' + r.name + '</strong><span>' + r.type + '</span>';
+            tip.classList.add('show');
+          }
+        });
+        s.addEventListener('mouseleave', () => {
+          shapes.forEach(p => p.style.fill = 'transparent');
+          tip.classList.remove('show');
+        });
+      });
+
+      g.addEventListener('mousemove', e => {
+        const rect = outer.getBoundingClientRect();
+        let x = e.clientX - rect.left + 14;
+        let y = e.clientY - rect.top + 40;
+        if (x + 190 > rect.width) x = e.clientX - rect.left - 195;
+        tip.style.left = x + 'px';
+        tip.style.top = y + 'px';
+      });
+    }
+
+    function attachClickListener(shapes, r) {
+      shapes.forEach(s => {
+        s.addEventListener('click', () => {
+          if (clickMoved) return;
+          renderInfoPanel(r);
+          if (r.drilldown) drillInto(r);
+        });
+      });
+    }
+
+    function renderInfoPanel(r) {
+      info.innerHTML =
+        '<div class="info-panel">' +
+        '<h2>' + r.name + '</h2>' +
+        '<p style="white-space: pre-line">' + r.desc + '</p>' +
+        '<div class="info-tags">' + r.tags.map(t => '<span class="info-tag">' + t + '</span>').join('') + '</div>' +
+        '</div>';
+    }
+
+
+    // ════════════════════════════════════════════════════════════════
+    // NAVIGATION
+    // ════════════════════════════════════════════════════════════════
+
+    function drillInto(r) {
+      showThrobber();
+      navStack.push({
+        label: r.name,
+        map: mapImg.src,
+        viewBox: svg.getAttribute('viewBox'),
+        drilldownRegions: r.drilldown.regions,
+        infoHtml: info.innerHTML
+      });
+
+      mapImg.src = r.drilldown.map;
+      svg.setAttribute('viewBox', r.drilldown.viewBox);
+      document.getElementById('pageLayout').classList.add('drilldown-layout');
+      document.getElementById('infoBox').classList.add('drilldown-sidebar');
+
+      renderRegions(r.drilldown.regions, true);
+      updateHeader();
+      mapImg.onload = () => { cacheDimensions(); resetView(); };
+      if (mapImg.complete) { cacheDimensions(); resetView(); }
+    }
+
+    function goToDepth(depth) {
+      if (depth === 0) {
+        navStack = [];
+        mapImg.src = 'Solmyra.png';
+        svg.setAttribute('viewBox', '0 0 3840 2160');
+        document.getElementById('pageLayout').classList.remove('drilldown-layout');
+        document.getElementById('infoBox').classList.remove('drilldown-sidebar');
+        info.innerHTML = '<p class="hint"></p>';
+        renderRegions(REGIONS, false);
+      } else {
+        const entry = navStack[depth - 1];
+        navStack = navStack.slice(0, depth);
+        mapImg.src = entry.map;
+        svg.setAttribute('viewBox', entry.viewBox);
+        info.innerHTML = entry.infoHtml;
+        renderRegions(entry.drilldownRegions, true);
+      }
+      updateHeader();
+      mapImg.onload = () => { cacheDimensions(); resetView(); };
+      if (mapImg.complete) { cacheDimensions(); resetView(); }
+    }
+
+    function updateHeader() {
+      if (navStack.length === 0) {
+        headerTitle.textContent = 'THE WORLD MAP';
+        headerBack.classList.remove('show');
+      } else {
+        headerTitle.textContent = navStack[navStack.length - 1].label.toUpperCase();
+        headerBack.classList.add('show');
+      }
+    }
+
+
+    // ════════════════════════════════════════════════════════════════
+    // PAN / ZOOM
+    // ════════════════════════════════════════════════════════════════
+
+    function clampTranslate() {
+      const maxTx = Math.min(0, cachedOuterW - cachedWrapW * scale);
+      const maxTy = Math.min(0, cachedOuterH - cachedWrapH * scale);
+      tx = Math.max(maxTx, Math.min(0, tx));
+      ty = Math.max(maxTy, Math.min(0, ty));
+    }
+
+    function applyTransform() {
+      clampTranslate();
+      wrap.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+    }
+
+    function scheduleTransform() {
+      if (rafPending) return;
+      rafPending = true;
+      requestAnimationFrame(() => { applyTransform(); rafPending = false; });
+    }
+
+    function resetView() { scale = 1; tx = 0; ty = 0; applyTransform(); }
+
+    outer.addEventListener('wheel', e => {
+      e.preventDefault();
+      const rect = outer.getBoundingClientRect();
+      const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+      const delta = e.deltaY < 0 ? 1.12 : 1 / 1.12;
+      const next = Math.min(8, Math.max(1, scale * delta));
+      tx = mx - (mx - tx) * (next / scale);
+      ty = my - (my - ty) * (next / scale);
+      scale = next;
+      scheduleTransform();
+    }, { passive: false });
+
+    outer.addEventListener('mousedown', e => {
+      dragging = true; clickMoved = false;
+      dragX = e.clientX; dragY = e.clientY;
+      outer.style.cursor = 'grabbing';
     });
-    s.addEventListener('mouseleave', () => {
-      shapes.forEach(p => p.style.fill = 'transparent');
-      tip.classList.remove('show');
+
+    window.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      tx += e.clientX - dragX; ty += e.clientY - dragY;
+      dragX = e.clientX; dragY = e.clientY;
+      clickMoved = true;
+      clampTranslate();
+      scheduleTransform();
     });
-  });
 
-  g.addEventListener('mousemove', e => {
-    const rect = outer.getBoundingClientRect();
-    let x = e.clientX - rect.left + 14;
-    let y = e.clientY - rect.top  - 10;
-    if (x + 190 > rect.width) x = e.clientX - rect.left - 195;
-    tip.style.left = x + 'px';
-    tip.style.top  = y + 'px';
-  });
-}
+    window.addEventListener('mouseup', () => { dragging = false; outer.style.cursor = 'grab'; });
 
-function attachClickListener(shapes, r) {
-  shapes.forEach(s => {
-    s.addEventListener('click', () => {
-      if (clickMoved) return;
-      renderInfoPanel(r);
-      if (r.drilldown) drillInto(r);
-    });
-  });
-}
-
-function renderInfoPanel(r) {
-  info.innerHTML =
-    '<div class="info-panel">' +
-      '<h2>' + r.name + '</h2>' +
-      '<p style="white-space: pre-line">' + r.desc + '</p>' +
-      '<div class="info-tags">' + r.tags.map(t => '<span class="info-tag">' + t + '</span>').join('') + '</div>' +
-    '</div>';
-}
+    document.getElementById('site-header').addEventListener('mousedown', e => e.stopPropagation());
+    headerBack.addEventListener('click', () => goToDepth(0));
 
 
-// ════════════════════════════════════════════════════════════════
-// NAVIGATION
-// ════════════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════
+    // BOOT
+    // ════════════════════════════════════════════════════════════════
 
-function drillInto(r) {
-  navStack.push({
-    label:            r.name,
-    map:              mapImg.src,
-    viewBox:          svg.getAttribute('viewBox'),
-    drilldownRegions: r.drilldown.regions,
-    infoHtml:         info.innerHTML
-  });
-
-  mapImg.src = r.drilldown.map;
-  svg.setAttribute('viewBox', r.drilldown.viewBox);
-  document.getElementById('pageLayout').classList.add('drilldown-layout');
-  document.getElementById('infoBox').classList.add('drilldown-sidebar');
-
-  renderRegions(r.drilldown.regions, true);
-  updateHeader();
-  resetView();
-}
-
-function goToDepth(depth) {
-  if (depth === 0) {
-    navStack = [];
-    mapImg.src = 'Solmyra.png';
-    svg.setAttribute('viewBox', '0 0 3840 2160');
-    document.getElementById('pageLayout').classList.remove('drilldown-layout');
-    document.getElementById('infoBox').classList.remove('drilldown-sidebar');
-    info.innerHTML = '<p class="hint"></p>';
+    cacheDimensions();
     renderRegions(REGIONS, false);
-  } else {
-    const entry = navStack[depth - 1];
-    navStack = navStack.slice(0, depth);
-    mapImg.src = entry.map;
-    svg.setAttribute('viewBox', entry.viewBox);
-    info.innerHTML = entry.infoHtml;
-    renderRegions(entry.drilldownRegions, true);
-  }
-  updateHeader();
-  resetView();
-}
+    updateHeader();
 
-function updateHeader() {
-  if (navStack.length === 0) {
-    headerTitle.textContent = 'THE WORLD MAP';
-    headerBack.classList.remove('show');
-  } else {
-    headerTitle.textContent = navStack[navStack.length - 1].label.toUpperCase();
-    headerBack.classList.add('show');
-  }
-}
-
-
-// ════════════════════════════════════════════════════════════════
-// PAN / ZOOM
-// ════════════════════════════════════════════════════════════════
-
-function clampTranslate() {
-  const maxTx = Math.min(0, outer.clientWidth  - wrap.clientWidth  * scale);
-  const maxTy = Math.min(0, outer.clientHeight - wrap.clientHeight * scale);
-  tx = Math.max(maxTx, Math.min(0, tx));
-  ty = Math.max(maxTy, Math.min(0, ty));
-}
-
-function applyTransform() {
-  clampTranslate();
-  wrap.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
-}
-
-function scheduleTransform() {
-  if (rafPending) return;
-  rafPending = true;
-  requestAnimationFrame(() => { applyTransform(); rafPending = false; });
-}
-
-function resetView() { scale = 1; tx = 0; ty = 0; applyTransform(); }
-
-outer.addEventListener('wheel', e => {
-  e.preventDefault();
-  const rect  = outer.getBoundingClientRect();
-  const mx    = e.clientX - rect.left, my = e.clientY - rect.top;
-  const delta = e.deltaY < 0 ? 1.12 : 1 / 1.12;
-  const next  = Math.min(8, Math.max(1, scale * delta));
-  tx = mx - (mx - tx) * (next / scale);
-  ty = my - (my - ty) * (next / scale);
-  scale = next;
-  scheduleTransform();
-}, { passive: false });
-
-outer.addEventListener('mousedown', e => {
-  dragging = true; clickMoved = false;
-  dragX = e.clientX; dragY = e.clientY;
-  outer.style.cursor = 'grabbing';
-});
-
-window.addEventListener('mousemove', e => {
-  if (!dragging) return;
-  tx += e.clientX - dragX; ty += e.clientY - dragY;
-  dragX = e.clientX; dragY = e.clientY;
-  clickMoved = true;
-  clampTranslate();
-  scheduleTransform();
-});
-
-window.addEventListener('mouseup', () => { dragging = false; outer.style.cursor = 'grab'; });
-
-// Prevent header clicks from bleeding into map drag
-document.getElementById('site-header').addEventListener('mousedown', e => e.stopPropagation());
-
-headerBack.addEventListener('click', () => goToDepth(0));
-
-
-// ════════════════════════════════════════════════════════════════
-// BOOT
-// ════════════════════════════════════════════════════════════════
-
-renderRegions(REGIONS, false);
-updateHeader();
-
-</script>
+  </script>
 </body>
+
 </html>
