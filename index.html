@@ -7,9 +7,32 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<h1>Solmyra</h1>
-<div class="breadcrumb" id="bc"><span class="cur">World Map</span></div>
+<div id="welcome-overlay">
+  <div id="welcome-modal">
+    <h2>Welcome to Solmyra</h2>
+    <p>
+      Explore an interactive map of the world. Click any region to learn more,
+      and use scroll or pinch to zoom. Some regions contain detailed sub-maps.
+    </p>
+    <div class="modal-footer">
+      <label>
+        <input type="checkbox" id="dont-show-again">
+        Don't show this again
+      </label>
+      <button id="welcome-close">Enter</button>
+    </div>
+  </div>
+</div>
+<div id="site-header">
+  <div class="header-eyebrow">— Solmyra —</div>
+  <div class="header-title" id="header-title">THE WORLD MAP</div>
+  <div class="header-divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond"></div>
+    <div class="divider-line"></div>
+  </div>
+  <button class="header-back" id="header-back">← World Map</button>
+</div>
 
 <div id="pageLayout">
   <div class="map-outer" id="mapOuter">
@@ -31,26 +54,26 @@
     </div>
     <div class="tip" id="tip"></div>
   </div>
-  <div id="infoBox"><p class="hint">Click any region to explore it.</p></div>
+  <div id="infoBox"><p class="hint"></p></div>
 </div>
 
-<!-- Sub-region data files — load BEFORE data.js. Add one line per region file. -->
 <script src="regions/grennmoor.js"></script>
 <script src="data.js"></script>
-
+<script src="welcome.js"></script>
 <script>
 // ═══════════════════════════════════════════════════════════════
 // ENGINE — no need to edit this file for content changes
 // ═══════════════════════════════════════════════════════════════
 
 // ── DOM refs ─────────────────────────────────────────────────────
-const svg   = document.getElementById('hotspotSvg');
-const wrap  = document.getElementById('mapWrap');
-const outer = document.getElementById('mapOuter');
-const info  = document.getElementById('infoBox');
-const bc    = document.getElementById('bc');
-const tip   = document.getElementById('tip');
-const mapImg = document.getElementById('mapImg');
+const svg         = document.getElementById('hotspotSvg');
+const wrap        = document.getElementById('mapWrap');
+const outer       = document.getElementById('mapOuter');
+const info        = document.getElementById('infoBox');
+const tip         = document.getElementById('tip');
+const mapImg      = document.getElementById('mapImg');
+const headerTitle = document.getElementById('header-title');
+const headerBack  = document.getElementById('header-back');
 
 // ── Nav state ────────────────────────────────────────────────────
 let navStack = [];
@@ -58,6 +81,7 @@ let navStack = [];
 // ── Pan/zoom state ───────────────────────────────────────────────
 let scale = 1, tx = 0, ty = 0;
 let dragging = false, dragX = 0, dragY = 0, clickMoved = false;
+let rafPending = false;
 
 
 // ════════════════════════════════════════════════════════════════
@@ -65,7 +89,6 @@ let dragging = false, dragX = 0, dragY = 0, clickMoved = false;
 // ════════════════════════════════════════════════════════════════
 
 function renderRegions(regions, showTooltips = false) {
-  // Remove all hotspots, keep <defs>
   Array.from(svg.children).forEach(el => { if (el.tagName !== 'defs') el.remove(); });
 
   regions.forEach(r => {
@@ -85,7 +108,6 @@ function renderRegions(regions, showTooltips = false) {
       return el;
     });
 
-    // Label
     const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
     lbl.classList.add('region-label');
     lbl.setAttribute('x', r.lx * sc);
@@ -129,11 +151,11 @@ function buildGradient(src, sc, r, i) {
     radius = Math.max(maxX - minX, maxY - minY) / 2;
   }
 
-  const base = svg.querySelector(`#${r.grad}`);
+  const base = svg.querySelector('#' + r.grad);
   if (!base) return r.grad;
 
-  const gradId = `${r.grad}_${r.id}_${i}`;
-  let clone = svg.querySelector(`#${gradId}`);
+  const gradId = r.grad + '_' + r.id + '_' + i;
+  let clone = svg.querySelector('#' + gradId);
   if (!clone) {
     clone = base.cloneNode(true);
     clone.setAttribute('id', gradId);
@@ -148,9 +170,9 @@ function buildGradient(src, sc, r, i) {
 function attachHoverListeners(g, shapes, r, showTooltips) {
   shapes.forEach(s => {
     s.addEventListener('mouseenter', () => {
-      shapes.forEach(p => p.style.fill = `url(#${p._gradId})`);
+      shapes.forEach(p => p.style.fill = 'url(#' + p._gradId + ')');
       if (showTooltips) {
-        tip.innerHTML = `<strong>${r.name}</strong><span>${r.type}</span>`;
+        tip.innerHTML = '<strong>' + r.name + '</strong><span>' + r.type + '</span>';
         tip.classList.add('show');
       }
     });
@@ -181,12 +203,12 @@ function attachClickListener(shapes, r) {
 }
 
 function renderInfoPanel(r) {
-  info.innerHTML = `
-    <div class="info-panel">
-      <h2>${r.name}</h2>
-      <p style="white-space: pre-line">${r.desc}</p>
-      <div class="info-tags">${r.tags.map(t => `<span class="info-tag">${t}</span>`).join('')}</div>
-    </div>`;
+  info.innerHTML =
+    '<div class="info-panel">' +
+      '<h2>' + r.name + '</h2>' +
+      '<p style="white-space: pre-line">' + r.desc + '</p>' +
+      '<div class="info-tags">' + r.tags.map(t => '<span class="info-tag">' + t + '</span>').join('') + '</div>' +
+    '</div>';
 }
 
 
@@ -196,11 +218,11 @@ function renderInfoPanel(r) {
 
 function drillInto(r) {
   navStack.push({
-    label:           r.name,
-    map:             mapImg.src,
-    viewBox:         svg.getAttribute('viewBox'),
+    label:            r.name,
+    map:              mapImg.src,
+    viewBox:          svg.getAttribute('viewBox'),
     drilldownRegions: r.drilldown.regions,
-    infoHtml:        info.innerHTML
+    infoHtml:         info.innerHTML
   });
 
   mapImg.src = r.drilldown.map;
@@ -209,7 +231,7 @@ function drillInto(r) {
   document.getElementById('infoBox').classList.add('drilldown-sidebar');
 
   renderRegions(r.drilldown.regions, true);
-  renderBreadcrumb();
+  updateHeader();
   resetView();
 }
 
@@ -220,8 +242,7 @@ function goToDepth(depth) {
     svg.setAttribute('viewBox', '0 0 3840 2160');
     document.getElementById('pageLayout').classList.remove('drilldown-layout');
     document.getElementById('infoBox').classList.remove('drilldown-sidebar');
-    info.innerHTML = `<p class="hint">Click any region to explore it.</p>`;
-    bc.innerHTML   = `<span class="cur">World Map</span>`;
+    info.innerHTML = '<p class="hint"></p>';
     renderRegions(REGIONS, false);
   } else {
     const entry = navStack[depth - 1];
@@ -230,20 +251,19 @@ function goToDepth(depth) {
     svg.setAttribute('viewBox', entry.viewBox);
     info.innerHTML = entry.infoHtml;
     renderRegions(entry.drilldownRegions, true);
-    renderBreadcrumb();
   }
+  updateHeader();
   resetView();
 }
 
-function renderBreadcrumb() {
-  let html = `<span class="crumb" onclick="goToDepth(0)">World Map</span>`;
-  navStack.forEach((entry, i) => {
-    const isLast = i === navStack.length - 1;
-    html += `<span class="sep">›</span>` + (isLast
-      ? `<span class="cur">${entry.label}</span>`
-      : `<span class="crumb" onclick="goToDepth(${i + 1})">${entry.label}</span>`);
-  });
-  bc.innerHTML = html;
+function updateHeader() {
+  if (navStack.length === 0) {
+    headerTitle.textContent = 'THE WORLD MAP';
+    headerBack.classList.remove('show');
+  } else {
+    headerTitle.textContent = navStack[navStack.length - 1].label.toUpperCase();
+    headerBack.classList.add('show');
+  }
 }
 
 
@@ -251,12 +271,22 @@ function renderBreadcrumb() {
 // PAN / ZOOM
 // ════════════════════════════════════════════════════════════════
 
-function applyTransform() {
+function clampTranslate() {
   const maxTx = Math.min(0, outer.clientWidth  - wrap.clientWidth  * scale);
   const maxTy = Math.min(0, outer.clientHeight - wrap.clientHeight * scale);
   tx = Math.max(maxTx, Math.min(0, tx));
   ty = Math.max(maxTy, Math.min(0, ty));
-  wrap.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+}
+
+function applyTransform() {
+  clampTranslate();
+  wrap.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+}
+
+function scheduleTransform() {
+  if (rafPending) return;
+  rafPending = true;
+  requestAnimationFrame(() => { applyTransform(); rafPending = false; });
 }
 
 function resetView() { scale = 1; tx = 0; ty = 0; applyTransform(); }
@@ -270,7 +300,7 @@ outer.addEventListener('wheel', e => {
   tx = mx - (mx - tx) * (next / scale);
   ty = my - (my - ty) * (next / scale);
   scale = next;
-  applyTransform();
+  scheduleTransform();
 }, { passive: false });
 
 outer.addEventListener('mousedown', e => {
@@ -284,10 +314,16 @@ window.addEventListener('mousemove', e => {
   tx += e.clientX - dragX; ty += e.clientY - dragY;
   dragX = e.clientX; dragY = e.clientY;
   clickMoved = true;
-  applyTransform();
+  clampTranslate();
+  scheduleTransform();
 });
 
 window.addEventListener('mouseup', () => { dragging = false; outer.style.cursor = 'grab'; });
+
+// Prevent header clicks from bleeding into map drag
+document.getElementById('site-header').addEventListener('mousedown', e => e.stopPropagation());
+
+headerBack.addEventListener('click', () => goToDepth(0));
 
 
 // ════════════════════════════════════════════════════════════════
@@ -295,6 +331,7 @@ window.addEventListener('mouseup', () => { dragging = false; outer.style.cursor 
 // ════════════════════════════════════════════════════════════════
 
 renderRegions(REGIONS, false);
+updateHeader();
 
 </script>
 </body>
