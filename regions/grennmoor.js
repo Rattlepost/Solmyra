@@ -11,7 +11,7 @@
 // ================================================================
 
 const GRENNMOOR = {
-  map: "grennmoor.png",
+  map: "images/grennmoor.png",
   viewBox: "0 0 4149 5502", // ← update if your map is a different size
 
   regions: [

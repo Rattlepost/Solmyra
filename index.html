@@ -43,7 +43,7 @@
         <div class="throbber-bar"></div>
       </div>
       <div class="map-wrap" id="mapWrap">
-        <img id="mapImg" src="Solmyra.png" alt="Solmyra world map" />
+        <img id="mapImg" src="images/Solmyra.png" alt="Solmyra world map" />
         <svg id="hotspotSvg" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <radialGradient id="rg_red" gradientUnits="userSpaceOnUse">
@@ -296,7 +296,7 @@
     function goToDepth(depth) {
       if (depth === 0) {
         navStack = [];
-        mapImg.src = 'Solmyra.png';
+        mapImg.src = 'images/Solmyra.png';
         svg.setAttribute('viewBox', '0 0 3840 2160');
         document.getElementById('pageLayout').classList.remove('drilldown-layout');
         document.getElementById('infoBox').classList.remove('drilldown-sidebar');
