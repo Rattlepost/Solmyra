@@ -1,18 +1,72 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Solmyra — Wiki</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="images/favicon.ico" type="image/ico">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="images/favicon.ico" type="image/ico" />
+  <style>
+    #m-lock-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: #0e1117;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    #m-lock-overlay.show { display: flex; }
+    #m-lock-overlay p {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #4a5568;
+      margin: 0;
+      font-family: system-ui, sans-serif;
+    }
+    #m-lock-overlay .m-lock-diamond {
+      width: 6px; height: 6px;
+      background: #4a6fa5;
+      transform: rotate(45deg);
+    }
+    #m-lock-input {
+      background: #0a0d13;
+      border: 1px solid #2a2f3e;
+      border-radius: 2px;
+      padding: 9px 16px;
+      color: #c8d6e8;
+      font-size: 13px;
+      outline: none;
+      text-align: center;
+      width: 200px;
+      font-family: system-ui, sans-serif;
+    }
+    #m-lock-err {
+      font-size: 11px;
+      color: #4a5568;
+      letter-spacing: 0.1em;
+      min-height: 16px;
+      margin: 0;
+      text-transform: uppercase;
+      font-family: system-ui, sans-serif;
+    }
+  </style>
 </head>
 <body>
 
   <a href="index.html" class="wiki-nav-btn">← World Map</a>
 
-  <div class="wiki-page">
+  <div id="m-lock-overlay">
+    <div class="m-lock-diamond"></div>
+    <p>Restricted</p>
+    <input id="m-lock-input" type="password" placeholder="Enter password" autocomplete="off" />
+    <p id="m-lock-err"></p>
+  </div>
 
+  <div class="wiki-page">
     <aside class="wiki-contents">
       <div class="wiki-contents-header">
         <div class="wiki-contents-eyebrow">— Solmyra —</div>
@@ -26,15 +80,27 @@
 
           <details class="wiki-nav-details">
             <summary>Solmarch</summary>
-            <button class="wiki-nav-link" data-src="wiki/regions/test_password.html">Test Password</button>
-            <button class="wiki-nav-link" data-src="wiki/regions/grennmoor.html">Grennmoor</button>
+            <button class="wiki-nav-link" data-src="wiki/regions/test_password.html" data-restricted="true">
+              Test Password
+            </button>
+            <div class="wiki-nav-expandable">
+              <button class="wiki-nav-link" data-src="wiki/regions/grennmoor.html">Grennmoor</button>
+              <button class="wiki-nav-expand-btn" onclick="this.parentElement.classList.toggle('open')">▸</button>
+            </div>
+            <div class="wiki-nav-expandable-children">
+              <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/duskhelm.html">Duskhelm</button>
+              <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/fort-perrol.html">Fort Perrol</button>
+              <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/greyport.html">Greyport</button>
+            </div>
           </details>
 
         </details>
 
         <details class="wiki-nav-details">
           <summary>History</summary>
-          <button class="wiki-nav-link" data-src="wiki/history/the-founding.html">The Founding Age</button>
+          <button class="wiki-nav-link" data-src="wiki/history/the-founding.html">
+            The Founding Age
+          </button>
         </details>
 
       </nav>
@@ -48,122 +114,115 @@
       <iframe class="wiki-iframe" id="wiki-iframe" title="Article"></iframe>
       <div id="m-article-content"></div>
     </main>
-
   </div>
 
+  <!-- Load passwords from central file -->
+  <script src="passwords.js"></script>
+
   <script>
-  const iframe   = document.getElementById('wiki-iframe');
-  const empty    = document.getElementById('wiki-empty');
-  const panel    = document.getElementById('wiki-panel');
-  const contents = document.querySelector('.wiki-contents');
-  const mContent = document.getElementById('m-article-content');
-  const buttons  = document.querySelectorAll('.wiki-nav-link');
-  const isMobile = () => window.innerWidth <= 768;
+    const iframe      = document.getElementById("wiki-iframe");
+    const empty       = document.getElementById("wiki-empty");
+    const panel       = document.getElementById("wiki-panel");
+    const contents    = document.querySelector(".wiki-contents");
+    const mContent    = document.getElementById("m-article-content");
+    const buttons     = document.querySelectorAll(".wiki-nav-link");
+    const lockOverlay = document.getElementById("m-lock-overlay");
+    const lockInput   = document.getElementById("m-lock-input");
+    const lockErr     = document.getElementById("m-lock-err");
+    const isMobile    = () => window.innerWidth <= 768;
 
-  const backBtn = document.createElement('button');
-  backBtn.className = 'm-back-btn';
-  backBtn.textContent = '← Back';
-  panel.insertBefore(backBtn, panel.firstChild);
+    const backBtn = document.createElement("button");
+    backBtn.className = "m-back-btn";
+    backBtn.textContent = "← Back";
+    panel.insertBefore(backBtn, panel.firstChild);
 
-  backBtn.addEventListener('click', () => {
-    contents.classList.remove('m-hidden');
-    panel.classList.remove('m-visible');
-    mContent.innerHTML = '';
-  });
+    backBtn.addEventListener("click", () => {
+      contents.classList.remove("m-hidden");
+      panel.classList.remove("m-visible");
+      lockOverlay.classList.remove("show");
+      mContent.innerHTML = "";
+    });
 
-  function applyLock(content) {
-    const page     = content.querySelector('[data-locked]');
-    const lockEl   = content.querySelector('#lock-screen');
-    const input    = content.querySelector('#pw');
-    const err      = content.querySelector('#pw-err');
-    if (!page || !lockEl || !input) return;
-
-    const locked   = page.dataset.locked === 'true';
-    const password = page.dataset.password;
-    const key      = page.dataset.key;
-
-    if (locked && key && sessionStorage.getItem(key) !== 'yes') {
-      lockEl.style.display = 'flex';
-      page.style.display = 'none';
-      input.focus();
-      input.addEventListener('keydown', e => {
-        if (e.key !== 'Enter') return;
-        if (input.value === password) {
-          sessionStorage.setItem(key, 'yes');
-          lockEl.style.display = 'none';
-          page.style.display = '';
+    function showLock(password, key) {
+      lockOverlay.classList.add("show");
+      lockInput.value = "";
+      lockErr.textContent = "";
+      lockInput.style.borderColor = "#2a2f3e";
+      lockInput.focus();
+      const newInput = lockInput.cloneNode(true);
+      lockInput.parentNode.replaceChild(newInput, lockInput);
+      newInput.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter") return;
+        if (newInput.value === password) {
+          sessionStorage.setItem(key, "yes");
+          lockOverlay.classList.remove("show");
         } else {
-          if (err) err.textContent = 'Incorrect';
-          input.value = '';
-          input.style.borderColor = '#4a3040';
+          lockErr.textContent = "Incorrect";
+          newInput.value = "";
+          newInput.style.borderColor = "#4a3040";
           setTimeout(() => {
-            input.style.borderColor = '#2a2f3e';
-            if (err) err.textContent = '';
+            newInput.style.borderColor = "#2a2f3e";
+            lockErr.textContent = "";
           }, 1000);
         }
       });
     }
-  }
 
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        buttons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
 
-      if (isMobile()) {
-        fetch(btn.dataset.src)
-          .then(r => r.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const doc    = parser.parseFromString(html, 'text/html');
+        if (isMobile()) {
+          fetch(btn.dataset.src)
+            .then((r) => r.text())
+            .then((html) => {
+              const parser  = new DOMParser();
+              const doc     = parser.parseFromString(html, "text/html");
+              const content = doc.querySelector(".wiki-article-page");
 
-            // Grab article page and lock screen
-            const content    = doc.querySelector('.wiki-article-page');
-            const lockScreen = doc.querySelector('#lock-screen');
+              if (content) {
+                content.querySelectorAll("article-text").forEach((block) => {
+                  const raw = block.innerHTML;
+                  const paras = raw.split(/\n\s*\n/)
+                    .map((p) => p.trim())
+                    .filter((p) => p.length > 0)
+                    .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+                    .join("");
+                  const div = document.createElement("div");
+                  div.innerHTML = paras;
+                  block.replaceWith(div);
+                });
 
-            // Build a wrapper with both lock screen and content
-            const wrapper = document.createElement('div');
-            if (lockScreen) wrapper.appendChild(lockScreen);
-            if (content) {
-              // Auto-paragraph
-              content.querySelectorAll('article-text').forEach(block => {
-                const raw = block.innerHTML;
-                const paras = raw.split(/\n\s*\n/)
-                  .map(p => p.trim())
-                  .filter(p => p.length > 0)
-                  .map(p => `<p>${p.replace(/\n/g, ' ')}</p>`)
-                  .join('');
-                const div = document.createElement('div');
-                div.innerHTML = paras;
-                block.replaceWith(div);
-              });
-              wrapper.appendChild(content);
-            } else {
-              wrapper.innerHTML = '<p style="color:#4a5568;padding:24px;">Could not load article.</p>';
-            }
+                mContent.innerHTML = "";
+                mContent.appendChild(content);
 
-            mContent.innerHTML = '';
-            mContent.appendChild(wrapper);
+                // Look up password from central passwords.js
+                const locked   = content.dataset.locked === "true";
+                const key      = content.dataset.key;
+                const password = PASSWORDS[key];
 
-            // Apply lock logic
-            applyLock(wrapper);
+                if (locked && key && password && sessionStorage.getItem(key) !== "yes") {
+                  showLock(password, key);
+                }
+              } else {
+                mContent.innerHTML = '<p style="color:#4a5568;padding:24px;">Could not load article.</p>';
+              }
 
-            contents.classList.add('m-hidden');
-            panel.classList.add('m-visible');
-            panel.scrollTop = 0;
-          })
-          .catch(() => {
-            mContent.innerHTML = '<p style="color:#4a5568;padding:24px;">Could not load article.</p>';
-          });
-
-      } else {
-        iframe.src = btn.dataset.src;
-        iframe.classList.add('show');
-        empty.style.display = 'none';
-      }
+              contents.classList.add("m-hidden");
+              panel.classList.add("m-visible");
+              panel.scrollTop = 0;
+            })
+            .catch(() => {
+              mContent.innerHTML = '<p style="color:#4a5568;padding:24px;">Could not load article.</p>';
+            });
+        } else {
+          iframe.src = btn.dataset.src;
+          iframe.classList.add("show");
+          empty.style.display = "none";
+        }
+      });
     });
-  });
   </script>
-
 </body>
 </html>

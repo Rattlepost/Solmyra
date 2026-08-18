@@ -636,7 +636,7 @@ h1 {
 /* ── Article page styles (used inside iframe) ── */
 .wiki-article-page {
   padding: 48px 56px;
-  max-width: 800px;
+  max-width: 1100px;
 }
 .wiki-article-eyebrow {
   font-size: 10px;
@@ -829,4 +829,75 @@ h1 {
 
 #m-article-content {
   position: relative;
+}
+
+.wiki-nav-link[data-restricted="true"]::before {
+  content: '⚠  ';
+  font-size: 10px;
+}
+
+.wiki-nav-link[data-restricted="true"] {
+  color: #673770;
+}
+
+.wiki-nav-link[data-restricted="true"]:hover {
+  color: #e97762;
+}
+
+.wiki-nav-expandable-children .wiki-nav-link {
+  padding-left: 56px !important;
+}
+
+.wiki-nav-expandable-children {
+  background: #0e1117;
+}
+
+
+
+
+
+
+
+
+details.wiki-nav-details > summary.wiki-nav-summary-row {
+  padding-left: 0;
+}
+
+
+
+/* Fix Grennmoor alignment */
+
+
+
+
+.wiki-nav-summary-row::after {
+  font-size: 8px !important;
+}
+
+/* ── Expandable nav row ── */
+.wiki-nav-expandable {
+  display: flex;
+  align-items: center;
+}
+.wiki-nav-expandable .wiki-nav-link {
+  flex: 1;
+}
+.wiki-nav-expand-btn {
+  background: none;
+  border: none;
+  color: #2a2f3e;
+  font-size: 8px;
+  padding: 0 12px;
+  cursor: pointer;
+  transition: transform 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.wiki-nav-expand-btn:hover { color: #c8d6e8; }
+.wiki-nav-expandable.open .wiki-nav-expand-btn { transform: rotate(90deg); }
+
+.wiki-nav-expandable-children {
+  display: none;
+}
+.wiki-nav-expandable.open + .wiki-nav-expandable-children {
+  display: block;
 }
