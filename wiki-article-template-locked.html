@@ -64,7 +64,10 @@
   <p id="pw-err"></p>
 </div>
 
-<div id="wiki-article-page" class="wiki-article-page">
+<div id="wiki-article-page" class="wiki-article-page"
+  data-locked="true"
+  data-password="changeme"
+  data-key="unlocked_article_title">
 
   <div class="wiki-article-eyebrow">CATEGORY</div>
   <h1>Article Title</h1>
@@ -115,38 +118,32 @@
 </div>
 
 <script>
-// ============================================================
-// PASSWORD LOCK — edit these three values
-// ============================================================
-const LOCKED   = true;
-const PASSWORD = "changeme";
-const KEY      = "unlocked_article_title"; // unique per article
-// ============================================================
+const page     = document.getElementById('wiki-article-page');
+const LOCKED   = page.dataset.locked === 'true';
+const PASSWORD = page.dataset.password;
+const KEY      = page.dataset.key;
 
-const lockScreen = document.getElementById("lock-screen");
-const content    = document.getElementById("wiki-article-page");
-const input      = document.getElementById("pw");
-const err        = document.getElementById("pw-err");
+const lockScreen = document.getElementById('lock-screen');
+const input      = document.getElementById('pw');
+const err        = document.getElementById('pw-err');
 
-if (LOCKED && sessionStorage.getItem(KEY) !== "yes") {
-  // Show lock, hide content
-  lockScreen.classList.add("show");
-  content.style.display = "none";
+if (LOCKED && sessionStorage.getItem(KEY) !== 'yes') {
+  lockScreen.classList.add('show');
+  page.style.display = 'none';
   input.focus();
-
-  input.addEventListener("keydown", e => {
-    if (e.key !== "Enter") return;
+  input.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
     if (input.value === PASSWORD) {
-      sessionStorage.setItem(KEY, "yes");
-      lockScreen.classList.remove("show");
-      content.style.display = "";
+      sessionStorage.setItem(KEY, 'yes');
+      lockScreen.classList.remove('show');
+      page.style.display = '';
     } else {
-      err.textContent = "Incorrect";
-      input.value = "";
-      input.style.borderColor = "#4a3040";
+      err.textContent = 'Incorrect';
+      input.value = '';
+      input.style.borderColor = '#4a3040';
       setTimeout(() => {
-        input.style.borderColor = "#2a2f3e";
-        err.textContent = "";
+        input.style.borderColor = '#2a2f3e';
+        err.textContent = '';
       }, 1000);
     }
   });
