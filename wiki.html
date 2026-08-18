@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solmyra — Wiki</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="images/favicon.ico" type="image/ico">
+</head>
+<body>
+
+  <a href="index.html" class="wiki-nav-btn">← World Map</a>
+
+  <div class="wiki-page">
+
+    <!-- ══════════════════════════════════════════
+         CONTENTS SIDEBAR
+         To add a new article:
+           1. Create the HTML file in wiki/
+           2. Copy a <button> line and update
+              the text and data-src path
+         ══════════════════════════════════════════ -->
+    <aside class="wiki-contents">
+      <div class="wiki-contents-header">
+        <div class="wiki-contents-eyebrow">— Solmyra —</div>
+        <div class="wiki-contents-title">Compendium</div>
+      </div>
+
+      <nav class="wiki-contents-nav">
+
+        <details class="wiki-nav-details" open>
+          <summary>Regions</summary>
+
+          <details class="wiki-nav-details">
+            <summary>Solmarch</summary>
+            <button class="wiki-nav-link" data-src="wiki/regions/test_password.html">Test Password</button>
+            <button class="wiki-nav-link" data-src="wiki/regions/grennmoor.html">Grennmoor</button>
+          </details>
+
+        </details>
+
+        <details class="wiki-nav-details">
+          <summary>History</summary>
+          <button class="wiki-nav-link" data-src="wiki/history/the-founding.html">The Founding Age</button>
+        </details>
+
+      </nav>
+    </aside>
+
+    <!-- ══════════════════════════════════════════
+         ARTICLE PANEL
+         ══════════════════════════════════════════ -->
+    <main class="wiki-panel" id="wiki-panel">
+      <div class="wiki-panel-empty" id="wiki-empty">
+        <div class="wiki-panel-empty-diamond"></div>
+        <p>Select an article</p>
+      </div>
+      <iframe class="wiki-iframe" id="wiki-iframe" title="Article"></iframe>
+      <!-- Mobile article content injected here -->
+      <div id="m-article-content"></div>
+    </main>
+
+  </div>
+
+  <!-- Single script at bottom of body so DOM is ready -->
+  <script>
+  const iframe   = document.getElementById('wiki-iframe');
+  const empty    = document.getElementById('wiki-empty');
+  const panel    = document.getElementById('wiki-panel');
+  const contents = document.querySelector('.wiki-contents');
+  const mContent = document.getElementById('m-article-content');
+  const buttons  = document.querySelectorAll('.wiki-nav-link');
+  const isMobile = () => window.innerWidth <= 768;
+
+  // Add back button for mobile
+  const backBtn = document.createElement('button');
+  backBtn.className = 'm-back-btn';
+  backBtn.textContent = '← Back';
+  panel.insertBefore(backBtn, panel.firstChild);
+
+  backBtn.addEventListener('click', () => {
+    contents.classList.remove('m-hidden');
+    panel.classList.remove('m-visible');
+    mContent.innerHTML = '';
+  });
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (isMobile()) {
+        // Mobile: fetch and inject content directly
+        fetch(btn.dataset.src)
+          .then(r => r.text())
+          .then(html => {
+            const parser  = new DOMParser();
+            const doc     = parser.parseFromString(html, 'text/html');
+            const content = doc.querySelector('.wiki-article-page');
+
+            if (content) {
+              // Run auto-paragraph conversion
+              content.querySelectorAll('article-text').forEach(block => {
+                const raw = block.innerHTML;
+                const paragraphs = raw.split(/\n\s*\n/)
+                  .map(p => p.trim())
+                  .filter(p => p.length > 0)
+                  .map(p => `<p>${p.replace(/\n/g, ' ')}</p>`)
+                  .join('');
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = paragraphs;
+                block.replaceWith(wrapper);
+              });
+              mContent.innerHTML = '';
+              mContent.appendChild(content);
+            } else {
+              mContent.innerHTML = '<p style="color:#4a5568;padding:24px;">Could not load article.</p>';
+            }
+
+            contents.classList.add('m-hidden');
+            panel.classList.add('m-visible');
+            panel.scrollTop = 0;
+          })
+          .catch(() => {
+            mContent.innerHTML = '<p style="color:#4a5568;padding:24px;">Could not load article.</p>';
+          });
+
+      } else {
+        // Desktop: load in iframe
+        iframe.src = btn.dataset.src;
+        iframe.classList.add('show');
+        empty.style.display = 'none';
+      }
+    });
+  });
+  </script>
+
+</body>
+</html>

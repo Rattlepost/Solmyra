@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article Title</title>
+  <!-- Adjust path depth to match file location:
+       wiki/regions/ → ../../style.css
+       wiki/         → ../style.css -->
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<div class="wiki-article-page">
+
+  <div class="wiki-article-eyebrow">CATEGORY</div>
+  <h1>Article Title</h1>
+  <div class="wiki-divider">
+    <div class="divider-line"></div>
+    <div class="divider-diamond"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- Infobox — delete if not needed -->
+  <div class="wiki-infobox">
+    <div class="wiki-infobox-title">Article Title</div>
+    <div class="wiki-infobox-row">
+      <span class="wiki-infobox-label">Type</span>
+      <span class="wiki-infobox-value">Region</span>
+    </div>
+    <div class="wiki-infobox-row">
+      <span class="wiki-infobox-label">Capital</span>
+      <span class="wiki-infobox-value">City Name</span>
+    </div>
+    <div class="wiki-infobox-row">
+      <span class="wiki-infobox-label">Races</span>
+      <span class="wiki-infobox-value">Human</span>
+    </div>
+  </div>
+
+  <h2>Overview</h2>
+  <p>Write your overview here.</p>
+
+  <h2>Geography</h2>
+  <p>Write about the geography here.</p>
+
+  <h2>People &amp; Culture</h2>
+  <p>Write about the people and culture here.</p>
+
+  <h2>History</h2>
+  <p>Write about the history here.</p>
+
+  <h2>Notable Locations</h2>
+  <ul>
+    <li><strong>Location Name</strong> — description.</li>
+  </ul>
+
+  <h2>Notable NPCs</h2>
+  <ul>
+    <li><strong>NPC Name</strong> — description.</li>
+  </ul>
+
+</div>
+<script>
+// Auto-paragraph: write plain text in <article-text> tags,
+// blank lines become new paragraphs automatically.
+document.querySelectorAll('article-text').forEach(block => {
+  const raw = block.innerHTML;
+  const paragraphs = raw
+    .split(/\n\s*\n/)           // split on blank lines
+    .map(p => p.trim())
+    .filter(p => p.length > 0)
+    .map(p => `<p>${p.replace(/\n/g, ' ')}</p>`)
+    .join('');
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = paragraphs;
+  block.replaceWith(wrapper);
+});
+</script>
+</body>
+</html>

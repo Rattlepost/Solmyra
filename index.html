@@ -2,6 +2,15 @@
 <html lang="en">
 
 <head>
+  <script>
+  (function() {
+    var mobile = window.innerWidth <= 768 ||
+                 /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    if (mobile) {
+      location.replace('wiki.html');
+    }
+  })();
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Solmyra</title>
@@ -35,6 +44,7 @@
       <div class="divider-line"></div>
     </div>
     <button class="header-back" id="header-back">← World Map</button>
+    <a href="wiki.html" class="wiki-nav-btn">📖 Compendium</a>
   </div>
 
   <div id="pageLayout">
