@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Far Lands</title>
+    <link rel="stylesheet" href="../../../style.css" />
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">Region</div>
+      <h1>The Far Lands</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">The Far Lands</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Type</span>
+            <span class="wiki-infobox-value">Region</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Races</span>
+            <span class="wiki-infobox-value">Unknown</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Neighbour</span>
+            <span class="wiki-infobox-value">None</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Weather</span>
+            <span class="wiki-infobox-value">Unknown</span>
+          </div>
+        </div>
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        The Far Lands are a region of four islands to the far west of Solmyra.
+        No vessel in recorded history has ever successfully reached them and
+        lived to tell the tale. Those who have attempted and returned describe
+        the area around the islands as though it is against them. Compasses
+        behave strangely, navigation by sky fails, and distances are not as
+        expected. The islands are not mentioned in any serious literature or
+        geographical depictions. They are rather considered the end of the
+        world.
+      </article-text>
+
+    </div>
+    <script>
+      // Auto-paragraph: write plain text in <article-text> tags,
+      // blank lines become new paragraphs automatically.
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/) // split on blank lines
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>

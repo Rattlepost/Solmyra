@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Pantheon of Solmyra</title>
+    <link rel="stylesheet" href="../../style.css" />
+    <style></style>
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">Religion</div>
+      <h1>The Pantheon of Solmyra</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">Gods of the Pantheon</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">War and Conflict</span>
+            <span class="wiki-infobox-value">Vareth</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Ocean and Air</span>
+            <span class="wiki-infobox-value">Nyssara</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Death and Transition</span>
+            <span class="wiki-infobox-value">Morfeld</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Knowledge and Secrets</span>
+            <span class="wiki-infobox-value">Irithee</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Harvest and Survival</span>
+            <span class="wiki-infobox-value">Corvane</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Fate and Chance</span>
+            <span class="wiki-infobox-value">Stels</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Beauty and Desire</span>
+            <span class="wiki-infobox-value">Lyssae</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Borders and Thresholds</span>
+            <span class="wiki-infobox-value">Thane</span>
+          </div>
+        </div>
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        Solmyra's pantheon is made up of eight gods, each pertianing to a
+        specific domain. Each god has their own followers, and religious
+        organizations that help spread their influence. The power of each god is
+        directly related and sustained through the number of followers of that
+        god. The greater the number of worshipers, the more powerful the god.
+        This power share makes organized religion a necessity of the gods, but
+        still puts them all at odds with each other. While their followers may interact
+        cordially with each other, the gods all have rivalries working against one
+        another in the background. If one member were to lose all followers, though its never
+        happened, the consequences are assumed to be severe.
+      </article-text>
+
+      <table class="wiki-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Domain</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Vareth</td>
+            <td>War and Conflict</td>
+            <td>
+              The most heavily worshiped domain and the most powerful of the
+              gods. This domain gains its power from the disagreements between
+              people.
+            </td>
+          </tr>
+          <tr>
+            <td>Nyssara</td>
+            <td>Ocean and Air</td>
+            <td>
+              This domain controls the ocean and the weather, bringing smooth
+              sailing to followers and ruthless storms to those opposed.
+            </td>
+          </tr>
+          <tr>
+            <td>Morfeld</td>
+            <td>Death and Transition</td>
+            <td>
+              This domain focuses on the transitions of life, specifically from
+              life to death. In Solmyra, death is a journey to a new place
+              rather than an ending.
+            </td>
+          </tr>
+          <tr>
+            <td>Irithee</td>
+            <td>Knowledge and Secrets</td>
+            <td>
+              This domain oversees the accumulation of knowledge, and determines
+              what should be shared or kept secret.
+            </td>
+          </tr>
+          <tr>
+            <td>Corvane</td>
+            <td>Harvest and Survival</td>
+            <td>
+              This domain ensures bountiful harvests and plentiful game for its
+              worshipers. Those who do not follow find farming and hunting to
+              not be their strong suit.
+            </td>
+          </tr>
+          <tr>
+            <td>Stels</td>
+            <td>Fate and Chance</td>
+            <td>
+              The domain of gambling. A bad hand is bound to lose, unless your
+              opponent is unlucky.
+            </td>
+          </tr>
+          <tr>
+            <td>Lyssae</td>
+            <td>Beauty and Desire</td>
+            <td>
+              The domain of vanity, want, and ambition — for those who hope and
+              dream of riches and beauty.
+            </td>
+          </tr>
+          <tr>
+            <td>Thane</td>
+            <td>Borders and Thresholds</td>
+            <td>
+              This domain governs liminal spaces and contracts. You will know if
+              you have stepped out of your bounds.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="wiki-related">
+        <div class="wiki-related-label">Related Articles</div>
+        <div class="wiki-related-links">
+          <a class="wiki-related-link" href="far-lands.html">The Far Lands</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/)
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>

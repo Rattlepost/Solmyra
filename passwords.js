@@ -5,6 +5,7 @@
 // ================================================================
 const PASSWORDS = {
   "unlocked_article_title": "changeme1",
-  // "unlocked_elorath":    "secretword",
-  // "unlocked_shrouded":   "anotherword",
+  "pantheon": "falsegod",
+  "founding": "vaerrace",
+  "far_lands": "godhome"
 };
