@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capture of Fort Eldwick</title>
+    <!-- Adjust path depth to match file location:
+       wiki/regions/ → ../../style.css
+       wiki/         → ../style.css -->
+    <link rel="stylesheet" href="../../../../style.css" />
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">BATTLE</div>
+      <h1>Capture of Fort Eldwick</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- Infobox — delete if not needed -->
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">Capture of Fort Eldwick</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Date</span>
+            <span class="wiki-infobox-value">442 CE</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Location</span>
+            <span class="wiki-infobox-value"
+              >Within the Hellspur Mountains</span
+            >
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Participants</span>
+            <span class="wiki-infobox-value">Pellhiem, Wyrm</span>
+          </div>
+          <!-- Optional image — delete if not needed -->
+        </div>
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        Fort Eldwick was abandoned by Grennmoor shortly after its construction.
+        Forty years later, the Grennmoor Rebellion forced a group of Gremorians
+        to flee and create the region of Pellhiem. Later into Pellhiem's years,
+        they needed new sources of metal. Fort Eldwick was not talked about much
+        in Grennmoor as it was seen as a failure and not worth discussing; more
+        of a rumor then fact. The location was only generally known, so Pellhiem
+        organized multiple search parties. The first party went down the north
+        road, where the fort was rumored to be. Unfortunately, a late spring
+        winter storm caught them off guard and killed the entire party. The
+        second party tried the southern road during the summer months where it
+        is slightly warmer. They were not successful in finding the fort, but
+        they did find an unguarded border or Grennmoor. They returned with their
+        findings and a third search party was sent out. They went down the
+        northern road in the early fall months, hoping to do better then the
+        previous party. After five weeks of searching, what appeared to be an
+        old and decrepit road led around the mountains, a place they had not
+        been before. After walking the road, they came upon the fort hidden in
+        the hills. It's walls had mostly fallen, only the southern facing wall
+        was still standing. The base of the fort seemed to still be intact and
+        sturdy, surprising for a structure so old. They ventured into the fort
+        and inspected what was left. After confirming it was in fact safe, they
+        celebrated, playing music and singing, while a celebratory meal was
+        prepared. 
+        
+        What they did not know however, a wyrm had called this place
+        home for the last forty years. The loud music and singing brought the
+        flying creature home without warning. Two party members were killed
+        almost instantly before anyone could react to what had happened. The
+        wyrm then landed in the fort and a battle was had. Thankfully, three
+        skilled fighters had come with the party along with a cleric. With their
+        efforts, the wyrm was killed before any other party members died. 
+        
+        After
+        killing the wyrm, they hung its skeleton on the southern wall as a
+        warning to other wyrms, and it worked. Fort Eldwick became the main
+        mining operation for Pellhiem shortly after the party returned with
+        their victory, and the fort has not since been attacked by another wyrm.
+      </article-text>
+    </div>
+    <script>
+      // Auto-paragraph: write plain text in <article-text> tags,
+      // blank lines become new paragraphs automatically.
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/) // split on blank lines
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>

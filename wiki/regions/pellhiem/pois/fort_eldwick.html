@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fort Eldwick</title>
+    <!-- Adjust path depth to match file location:
+       wiki/regions/ → ../../style.css
+       wiki/         → ../style.css -->
+    <link rel="stylesheet" href="../../../../style.css" />
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">Fort</div>
+      <h1>Fort Eldwick</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- Infobox — delete if not needed -->
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">Fort Eldwick</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Location</span>
+            <span class="wiki-infobox-value"
+              >Within the Hellspur Mountains</span
+            >
+          </div>
+          <!-- Optional image — delete if not needed -->
+        </div>
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        Fort Eldwick was originally constructed in 206 CE by Grennmoor as an
+        outpost dedicated to mining minerals and metals from within the
+        mountains. However, wyrms living in the mountains began terrorizing the
+        outpost weekly because of the shiny objects collected there. This made
+        it almost impossible to use and was abandoned shortly after its
+        construction two years later. Over two hundred years later, the
+        structure was reclaimed by a small Pellhiem army. Although it was in
+        disrepair, Pellhiem was still able to use it as a mining base of
+        operations. To ward of wyrm attacks, they hung the skeleton of a wyrm
+        defeated upon retaking the base on the fort wall. They were no longer
+        attacked by wyrms after that.
+      </article-text>
+    </div>
+    <script>
+      // Auto-paragraph: write plain text in <article-text> tags,
+      // blank lines become new paragraphs automatically.
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/) // split on blank lines
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>
