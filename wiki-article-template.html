@@ -98,5 +98,18 @@ document.querySelectorAll('article-text').forEach(block => {
   block.replaceWith(wrapper);
 });
 </script>
+<script>
+  // Tell parent wiki page which article is loaded so sidebar updates
+  if (window.parent !== window) {
+    window.parent.postMessage({ article: location.pathname.split('/Solmyra/')[1] }, '*');
+  }
+  
+</script>
+<script>
+  // Tell parent wiki page which article is loaded so sidebar updates
+  if (window.parent !== window) {
+    window.parent.postMessage({ article: location.pathname.split('/Solmyra/')[1] }, '*');
+  }
+</script>
 </body>
 </html>

@@ -238,6 +238,7 @@
       btn.addEventListener("click", () => {
         buttons.forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
+              window._lastClickedBtn = btn;
 
         if (isMobile()) {
           fetch(btn.dataset.src)
@@ -288,6 +289,59 @@
         }
       });
     });
+    // Open article from URL parameter (e.g. wiki.html?article=wiki/regions/...)
+const urlParams = new URLSearchParams(location.search);
+const articleParam = urlParams.get('article');
+if (articleParam) {
+  iframe.src = articleParam;
+  iframe.classList.add('show');
+  empty.style.display = 'none';
+  const decoded = decodeURIComponent(articleParam);
+  if (decoded !== 'wiki/wip.html') {
+    buttons.forEach(btn => {
+      if (btn.dataset.src === decoded) {
+        btn.classList.add('active');
+        let el = btn.parentElement;
+        while (el && el !== document.body) {
+          if (el.tagName === 'DETAILS') el.open = true;
+          if (el.classList.contains('wiki-nav-expandable-children')) {
+            el.previousElementSibling.classList.add('open');
+          }
+          el = el.parentElement;
+        }
+      }
+    });
+  }
+}
+
+  // Update sidebar when iframe navigates (related links etc.)
+  document.getElementById('wiki-iframe').addEventListener('load', () => {
+    try {
+      const iframePath = document.getElementById('wiki-iframe').contentWindow.location.pathname;
+      const src = iframePath.includes('/Solmyra/')
+        ? iframePath.split('/Solmyra/')[1]
+        : iframePath.replace(/^[/]/, '');
+      document.querySelectorAll('.wiki-nav-link').forEach(btn => {
+        btn.classList.remove('active');
+        const isWip = src === 'wiki/wip.html';
+        const matches = btn.dataset.src === src && (!isWip || btn === window._lastClickedBtn);
+        if (matches) {
+          btn.classList.add('active');
+          if (!isWip) {
+            let el = btn.parentElement;
+            while (el && el !== document.body) {
+              if (el.tagName === 'DETAILS') el.open = true;
+              if (el.classList.contains('wiki-nav-expandable-children')) {
+                el.previousElementSibling.classList.add('open');
+              }
+              el = el.parentElement;
+            }
+            btn.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          }
+        }
+      });
+    } catch(e) {}
+  });
   </script>
 </body>
 </html>

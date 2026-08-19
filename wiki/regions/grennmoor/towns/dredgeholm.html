@@ -78,5 +78,15 @@
         block.replaceWith(wrapper);
       });
     </script>
+    <script>
+  // Tell parent wiki page which article is loaded so sidebar updates
+  if (window.parent !== window) {
+    const path = location.pathname;
+    const article = path.includes('/Solmyra/')
+      ? path.split('/Solmyra/')[1]
+      : path.replace(/^\//, '');
+    window.parent.postMessage({ article }, '*');
+  }
+</script>
   </body>
 </html>
