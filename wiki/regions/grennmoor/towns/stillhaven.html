@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stillhaven</title>
+    <!-- Adjust path depth to match file location:
+       wiki/regions/ → ../../style.css
+       wiki/         → ../style.css -->
+    <link rel="stylesheet" href="../../../../style.css" />
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">Town</div>
+      <h1>Stillhaven</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- ============================================================
+       Infobox — delete the whole wiki-infobox-wrap if not needed.
+       Delete wiki-infobox-image if no image needed.
+       Image path: adjust ../../images/ to match file depth.
+       ============================================================ -->
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">Stillhaven</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Type</span>
+            <span class="wiki-infobox-value">Commercial Hub</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Size</span>
+            <span class="wiki-infobox-value">Large</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Ruled By</span>
+            <span class="wiki-infobox-value">Lord Edran Cale</span>
+          </div>
+          <div class="wiki-infobox-image">
+          <img src="images/stillhaven.png" alt="Article image" />
+        </div>
+        </div>
+        <!-- Delete this div if no image needed -->
+        
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        Stillhaven sits at the cold northern edge of Grennmoor, far from the
+        kingdoms political center. Only small towns can be found north of
+        Stillhaven with the exception of Valdrest, a small town with a large
+        castle of the rich lord that resides there. By all measures, Stillhaven
+        should be a small, modest frontier settlement, not along the major trade
+        routes to Duskhelm. However, it is the regions second largest city and
+        inexplicably prosperous. The streets are wide for caravans and well
+        cobbled. The buildings are solid stone and timber and kept in good
+        repair. There are two functioning bathhouses, a covered market that
+        operates year round, and a large inn, the Wayrest, that runs a cleaner
+        and warmer establishment then any inns in Duskhelm. 
+        
+        Trade comes to Stillhaven in volumes that have never been explained by its geographical
+        location. In the winter, harsh storms make travel dangerous and in the
+        summer, constant rain muddies the roads. But trade still finds its way
+        as merchants take the northern road out of Greyport rather then the
+        southern path to Duskhelm. They always have a sense for the good deals
+        and full purses that come from Stillhaven, even foreigners. To the north
+        and eastern edge of the town lies the Stillwood Grove. Dark and looming,
+        it sends chills down anyone's spine who looks into the quiet undergrowth
+        for too long. Locals do not go into it and don't talk much about it
+        either, other then the occasional offhand remarks about its eerie
+        silence. Travelers to the region barely notice it, and often don't
+        remember the forest at all when they leave. The town seems to take your
+        attention to other things, making you forget anything not worth
+        remembering.
+      </article-text>
+
+      <h2>Ruler &amp; Government</h2>
+      <article-text>
+        Stillhaven is governed by Lord Edran Cale, a human man in his late
+        fifties who has governed the town for over two decades now. He is not
+        disliked, keeps taxes fair, and settles disputes with minimal drama.
+        Visitors can often meet him at the market or at one of the many
+        restaurants in the city and often describe him as measured and
+        hospitable man.
+      </article-text>
+    </div>
+
+    <script>
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/)
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>

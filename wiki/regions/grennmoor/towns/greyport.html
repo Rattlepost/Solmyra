@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Greyport</title>
+    <!-- Adjust path depth to match file location:
+       wiki/regions/ → ../../style.css
+       wiki/         → ../style.css -->
+    <link rel="stylesheet" href="../../../../style.css" />
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">TOWN</div>
+      <h1>Greyport</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- Infobox — delete if not needed -->
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">Greyport</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Type</span>
+            <span class="wiki-infobox-value">Port City</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Size</span>
+            <span class="wiki-infobox-value">Medium</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Ruled By</span>
+            <span class="wiki-infobox-value">Lord Bram Cutler</span>
+          </div>
+          <!-- Optional image — delete if not needed -->
+          <div class="wiki-infobox-image">
+            <img src="images/greyport.png" alt="Description" />
+          </div>
+        </div>
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        Greyport is the primary port city of Grennmoor and the kingdoms main
+        passage to the sea, sitting at the northern Frontier Waters in the
+        western edge of the region. It is a rather small city for a port, but
+        medium in size compared to the rest of the region. It is functional but
+        weathered from centuries of use, and the volume of trade that passes
+        through the city tells a different story then the streets. The building
+        are old and in need of repairs and the infrastructure has been
+        maintained but not improved since its original construction.
+        Unfortunately, the prosperity that passes through Greyport rarely is
+        shared with it.
+      </article-text>
+    </div>
+    <script>
+      // Auto-paragraph: write plain text in <article-text> tags,
+      // blank lines become new paragraphs automatically.
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/) // split on blank lines
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>

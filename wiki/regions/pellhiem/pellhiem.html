@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pellhiem</title>
+    <link rel="stylesheet" href="../../../style.css" />
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">Region</div>
+      <h1>Pellhiem</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">Pellhiem</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Type</span>
+            <span class="wiki-infobox-value">Region</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Races</span>
+            <span class="wiki-infobox-value">Primarily Human</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Neighbour</span>
+            <span class="wiki-infobox-value">Grennmoor</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Weather</span>
+            <span class="wiki-infobox-value">Warm, Arid</span>
+          </div>
+        </div>
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        Pellhiem was founded after the Grennmoor Rebellion, lead by Brennic
+        Pell. It is a sprawling city-state next to a massive valley lake. The
+        lake helps grow crops while the mountains to the north provide natural
+        protection against Grennmoor. Pellhiem is ruled by a royal family, the
+        bloodline of Brennic Pell, believed to be blessed by Vareth. It is a monarchy, having a king or queen pass
+        judgement down for the whole city-state. Its not a perfect government,
+        but at least things get done, good or bad, unlike the deadlock Grennmoor
+        is always stuck in. The current ruler is Queen Darka Pell, a bold leader
+        who believes they should not have to live in isolation from the world
+        and wants Grennmoor's ports, so they can finally be free. 
+      </article-text>
+
+      <h2>Geography</h2>
+      <p>
+        Pellhiem is in the southern half of Solmarch. It has a large valley lake
+        to the northwest, mountains along the northern border, a forest to the
+        south, and a dry plains to the east and southeast.
+      </p>
+
+      <h2>People &amp; Culture</h2>
+      <p>
+        The people of Pellhiem are mostly humans, with the occasional visitor
+        from other races. Pellhiem does not have a large population, but it is a
+        proud one. They have a strong military culture, often worshiping Vareth,
+        the god of War and Conflict. They are loyal to their land and will fight
+        those that oppose them, mainly Grennmoor.
+      </p>
+
+      <h2>History</h2>
+      <p>
+        After the
+        rebellion, Pellhiem amassed an army and captured Fort Eldwick, built by
+        Grennmoor but ultimately abandoned because of frequent wyrm attacks.
+        With this fort, they were able to start amassing tons of metal and
+        minerals inaccessible by Grennmoor in the mountains, making them a
+        wealthy country. Unfortunately, they had no port to Dawnmere, meaning
+        they could not sell any of this newfound wealth. Instead, they put it to
+        use crafting weapons and armor. Pellhiem now has a massive amount of
+        weapons and armor at its disposal, more then its army could every use,
+        and they intend to bring it to a fight with Grennmoor once they recruit
+        enough brave souls. After capturing the fort, Pellhiem decided to try
+        and take on Grennmoor at is southern border. This battle failed, wiping
+        out both sides armies almost completely. After this defeat, Pellhiem
+        retreated and did not seek out conflict for generations after.
+      </p>
+
+      <h2>Notable Locations</h2>
+      <ul>
+        <li>
+          <strong>Pellhiem</strong> — A sprawling city-state next to a massive valley lake. The only city in the region and home to the royal family.
+        </li>
+      </ul>
+    </div>
+    <script>
+      // Auto-paragraph: write plain text in <article-text> tags,
+      // blank lines become new paragraphs automatically.
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/) // split on blank lines
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>

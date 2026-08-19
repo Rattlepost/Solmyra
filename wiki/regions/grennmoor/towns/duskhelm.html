@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Duskhelm</title>
+    <!-- Adjust path depth to match file location:
+       wiki/regions/ → ../../style.css
+       wiki/         → ../style.css -->
+    <link rel="stylesheet" href="../../../../style.css" />
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">TOWN</div>
+      <h1>Duskhelm</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- Infobox — delete if not needed -->
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">Duskhelm</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Type</span>
+            <span class="wiki-infobox-value">Capital City</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Size</span>
+            <span class="wiki-infobox-value">Very Large</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Ruled By</span>
+            <span class="wiki-infobox-value">Council of Duskhelm</span>
+          </div>
+          <!-- Optional image — delete if not needed -->
+          <div class="wiki-infobox-image">
+            <img src="images/duskhelm.png" alt="Description" />
+          </div>
+        </div>
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        Duskhelm is the oldest and largest city in Grennmoor, acting as the
+        political epicenter for the region. Centuries of construction have
+        accumulated layers upon layers of stone in a dense urban sprawl. Canals
+        line many neighborhoods; an effective solution for the frequent flooding
+        that occurs from the spring rains in the midlands of Grennmoor.
+        Throughout the warmer months, boats travel these canals bringing goods
+        and people around the city. 
+        
+        The great castle in the city center towers
+        over the surrounding neighborhoods. It is a fortified complex that has
+        grown over the centuries with several additions and renovations, with
+        its older structures distinctly darker than the newer ones. This place
+        is where the Council of Lords resides, convenes, and deliberates. It
+        gives Duskhelm a certain atmosphere, born from the weight of its own
+        politics, noticed by all who visit and live there. The city exists in
+        the shadow of its governance, often filtering down into the lives of
+        everyday people from the price of goods to the moods of its residents.
+        The council is a slow churning machine, rarely getting anything of
+        substance done; an artifact of an old and unchanged governmental system.
+        However, their patience had been sharpened recently as Pellhiem grows
+        bolder to their south. 
+        
+        The last attack from the rouge nation was almost
+        70 years ago, near the location of Fort Perrol, but now it seems they
+        may be planning again. The only problem, Duskhelm does not keep a large
+        standing army. Metal is in the mountains to the south but is
+        unharvestable because of the wyrms that call them home. For this reason,
+        it is hard to arm non magic users with weapons and armor for battle. The
+        warriors that do exist either roam Duskhelm as it police force or are
+        privately hired by lords of each small town. Now the council must
+        bolster its defenses, but to do so requires agreement between six
+        council members; a rare occurrence even in times of peace. The Military
+        wants resources, Diplomacy wants a table, and the Treasury wants
+        neither. The debates drag on as the pressure builds from south.
+      </article-text>
+
+      <h2>Ruler &amp; Government</h2>
+      <p>
+        The Council of Duskhelm is the governing body of the city and the wider
+        Grennmoor region. It is comprised of nine lords, each responsible for
+        representing a specific portfolio of governance. The nine seats are
+        commerce, agriculture, military, justice, infrastructure, treasury,
+        diplomacy, clergy, and lands. There is no head of the council, they all
+        have equal say in what gets passed for the region. Any lord may bring a
+        matter to the floor each day, dictated by how recently they have brought
+        an issue forward. Whoever has gone longest without bringing an issue to
+        the floor may go first and so on. Then the matter is deliberated on for
+        the day until a verdict is reach or, if one has not been reached by the
+        end of the day, a vote is had to close the deliberations. To pass
+        anything, six or more lords must agree to pass it. However, this is a
+        rare occurrence. Most days are filled with disagreements and shouting.
+        And since each lord usually only gets to bring forward one issue every
+        nine days, and not much productive happens in the council chamber, an
+        issue may take months to pass.
+      </p>
+    </div>
+    <script>
+      // Auto-paragraph: write plain text in <article-text> tags,
+      // blank lines become new paragraphs automatically.
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/) // split on blank lines
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>

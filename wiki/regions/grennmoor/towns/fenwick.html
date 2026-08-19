@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fenwick</title>
+    <!-- Adjust path depth to match file location:
+       wiki/regions/ → ../../style.css
+       wiki/         → ../style.css -->
+    <link rel="stylesheet" href="../../../../style.css" />
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">TOWN</div>
+      <h1>Fenwick</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- Infobox — delete if not needed -->
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">Fenwick</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Type</span>
+            <span class="wiki-infobox-value">Lumber Town</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Size</span>
+            <span class="wiki-infobox-value">Large</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Ruled By</span>
+            <span class="wiki-infobox-value">Lord Hal Nedye</span>
+          </div>
+          <!-- Optional image — delete if not needed -->
+          <div class="wiki-infobox-image">
+            <img src="images/fenwick.png" alt="Description" />
+          </div>
+        </div>
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        Fenwick is the third largest town in Grennmoor. It's located below
+        Midwood forest which is where Grennmoor get a majority of its timber and
+        local game. It is a fairly uneventful town, being out of the cold and
+        floodplains. However, the lord of Fenwick recently passed away and the
+        new lord is still learning the ropes and the people are watching closely
+        to see how he handles the position.
+      </article-text>
+
+      <h2>Ruler &amp; Government</h2>
+      <p>
+        Its ruled by Lord Hal Nedye, a younger lord for the region. The previous
+        lord passed unexpectedly and Duskhelm did not have time to deliberate
+        about a replacement so his son came into power by default. He is in his
+        late 30s and isn't very well liked by the people due to his inexperience
+        and young age. His father had kept taxes low to please the people, but
+        at the cost of mounting debt. His son choose to raise the taxes to
+        escape the scrutiny of Duskhelm, but it only brought the scrutiny of the
+        people.
+      </p>
+    </div>
+    <script>
+      // Auto-paragraph: write plain text in <article-text> tags,
+      // blank lines become new paragraphs automatically.
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/) // split on blank lines
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>

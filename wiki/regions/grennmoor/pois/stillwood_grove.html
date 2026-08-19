@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stillwood Grove</title>
+    <!-- Adjust path depth to match file location:
+       wiki/regions/ → ../../style.css
+       wiki/         → ../style.css -->
+    <link rel="stylesheet" href="../../../../style.css" />
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">Forest</div>
+      <h1>Stillwood Grove</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- Infobox — delete if not needed -->
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">Stillwood Grove</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Location</span>
+            <span class="wiki-infobox-value">North and east of Stillhaven</span>
+          </div>    
+          <!-- Optional image — delete if not needed -->
+        </div>
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        The Stillwood Grove is north and east of Stillhaven, and stretches all
+        the way to the sea. It is a massive, dark, and looming forest that sends
+        chills down anyone's spine who looks into its quiet undergrowth. The
+        locals never feel at ease around it, as if there is something wrong with
+        the forest. The trees are too still and no animals can be seen or heard
+        past the tree line. The quiet that emanates from the grove isn't the
+        same peaceful quiet as the surrounding countryside; it is a quiet that
+        presses upon those who listen. The residents avoid the forest entirely
+        for reasons they cannot fully explain besides the constant unease that
+        it brings them.
+      </article-text>
+    </div>
+    <script>
+      // Auto-paragraph: write plain text in <article-text> tags,
+      // blank lines become new paragraphs automatically.
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/) // split on blank lines
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>

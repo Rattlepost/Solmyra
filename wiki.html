@@ -80,27 +80,95 @@
 
           <details class="wiki-nav-details">
             <summary>Solmarch</summary>
-            <button class="wiki-nav-link" data-src="wiki/regions/test_password.html" data-restricted="true">
-              Test Password
-            </button>
+
+            <!-- Grennmoor — clickable + expandable -->
             <div class="wiki-nav-expandable">
-              <button class="wiki-nav-link" data-src="wiki/regions/grennmoor.html">Grennmoor</button>
+              <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/grennmoor.html">Grennmoor</button>
               <button class="wiki-nav-expand-btn" onclick="this.parentElement.classList.toggle('open')">▸</button>
             </div>
             <div class="wiki-nav-expandable-children">
-              <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/duskhelm.html">Duskhelm</button>
-              <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/fort-perrol.html">Fort Perrol</button>
-              <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/greyport.html">Greyport</button>
+
+              <!-- Towns dropdown under Grennmoor -->
+              <details class="wiki-nav-details">
+                <summary>Towns</summary>
+                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/towns/duskhelm.html">Duskhelm</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/towns/stillhaven.html">Stillhaven</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/towns/greyport.html">Greyport</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/towns/fenwick.html">Fenwick</button>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Fort Perrol</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/towns/dredgeholm.html">Dredgeholm</button>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Valdrest</button>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Lone Landing</button>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Gateside</button>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Greyport</button>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Aldshore</button>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Coldshore</button>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Glassend</button>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Lethwick</button>
+
+              </details>
+
+              <details class="wiki-nav-details">
+                <summary>Points of Interest</summary>
+                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/pois/dredgeholm_mine.html">Dredgeholm Mines</button>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Midwood Forest</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/pois/stillwood_grove.html">Stillwood Grove</button>
+              </details>
+
+              <details class="wiki-nav-details">
+                <summary>Noteable Events</summary>
+                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/events/grennmoor_rebellion.html">Grennmoor Rebellion</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/events/pellhiem_uprising.html">Pellhiem Uprising</button>
+              </details>
+
+              <details class="wiki-nav-details">
+                <summary>Culture</summary>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Nothing Here Yet</button>
+              </details>
+              <!-- Add more dropdowns or links under Grennmoor here -->
+
             </div>
+
+            <div class="wiki-nav-expandable">
+              <button class="wiki-nav-link" data-src="wiki/regions/pellhiem/pellhiem.html">Pellhiem</button>
+              <button class="wiki-nav-expand-btn" onclick="this.parentElement.classList.toggle('open')">▸</button>
+            </div>
+            <div class="wiki-nav-expandable-children">
+
+              <!-- Towns dropdown under Grennmoor -->
+              <details class="wiki-nav-details">
+                <summary>Towns</summary>
+               <button class="wiki-nav-link" data-src="wiki/wip.html">Nothing Here Yet</button>
+              </details>
+
+              <details class="wiki-nav-details">
+                <summary>Points of Interest</summary>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Nothing Here Yet</button>
+              </details>
+
+              <details class="wiki-nav-details">
+                <summary>Noteable Events</summary>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Nothing Here Yet</button>
+              </details>
+
+              <details class="wiki-nav-details">
+                <summary>Culture</summary>
+                <button class="wiki-nav-link" data-src="wiki/wip.html">Nothing Here Yet</button>
+              </details>
+              <!-- Add more dropdowns or links under Grennmoor here -->
+
+            </div>
+          
+
           </details>
+
+          <!-- Add more regions here -->
 
         </details>
 
         <details class="wiki-nav-details">
           <summary>History</summary>
-          <button class="wiki-nav-link" data-src="wiki/history/the-founding.html">
-            The Founding Age
-          </button>
+          <button class="wiki-nav-link" data-src="wiki/history/the-founding.html">The Founding Age</button>
         </details>
 
       </nav>
@@ -116,9 +184,7 @@
     </main>
   </div>
 
-  <!-- Load passwords from central file -->
   <script src="passwords.js"></script>
-
   <script>
     const iframe      = document.getElementById("wiki-iframe");
     const empty       = document.getElementById("wiki-empty");
@@ -197,7 +263,6 @@
                 mContent.innerHTML = "";
                 mContent.appendChild(content);
 
-                // Look up password from central passwords.js
                 const locked   = content.dataset.locked === "true";
                 const key      = content.dataset.key;
                 const password = PASSWORDS[key];

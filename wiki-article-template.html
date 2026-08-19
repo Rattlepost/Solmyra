@@ -21,34 +21,56 @@
     <div class="divider-line"></div>
   </div>
 
-  <!-- Infobox — delete if not needed -->
-  <div class="wiki-infobox">
-    <div class="wiki-infobox-title">Article Title</div>
-    <div class="wiki-infobox-row">
-      <span class="wiki-infobox-label">Type</span>
-      <span class="wiki-infobox-value">Region</span>
+  <!-- ============================================================
+       Infobox — delete the whole wiki-infobox-wrap if not needed.
+       Delete wiki-infobox-image if no image needed.
+       Image path: adjust ../../images/ to match file depth.
+       ============================================================ -->
+  <div class="wiki-infobox-wrap">
+    <div class="wiki-infobox">
+      <div class="wiki-infobox-title">Article Title</div>
+      <div class="wiki-infobox-row">
+        <span class="wiki-infobox-label">Type</span>
+        <span class="wiki-infobox-value">Region</span>
+      </div>
+      <div class="wiki-infobox-row">
+        <span class="wiki-infobox-label">Capital</span>
+        <span class="wiki-infobox-value">City Name</span>
+      </div>
+      <div class="wiki-infobox-row">
+        <span class="wiki-infobox-label">Races</span>
+        <span class="wiki-infobox-value">Human</span>
+      </div>
+      <div class="wiki-infobox-image">
+      <img src="../../images/your-image.png" alt="Article image" />
     </div>
-    <div class="wiki-infobox-row">
-      <span class="wiki-infobox-label">Capital</span>
-      <span class="wiki-infobox-value">City Name</span>
     </div>
-    <div class="wiki-infobox-row">
-      <span class="wiki-infobox-label">Races</span>
-      <span class="wiki-infobox-value">Human</span>
-    </div>
+    <!-- Delete this div if no image needed -->
+    
   </div>
 
   <h2>Overview</h2>
-  <p>Write your overview here.</p>
+  <article-text>
+    Write your overview here. Use blank lines to
+    separate paragraphs — no HTML needed.
+
+    This would be a second paragraph.
+  </article-text>
 
   <h2>Geography</h2>
-  <p>Write about the geography here.</p>
+  <article-text>
+    Write about the geography here.
+  </article-text>
 
   <h2>People &amp; Culture</h2>
-  <p>Write about the people and culture here.</p>
+  <article-text>
+    Write about the people and culture here.
+  </article-text>
 
   <h2>History</h2>
-  <p>Write about the history here.</p>
+  <article-text>
+    Write about the history here.
+  </article-text>
 
   <h2>Notable Locations</h2>
   <ul>
@@ -61,13 +83,12 @@
   </ul>
 
 </div>
+
 <script>
-// Auto-paragraph: write plain text in <article-text> tags,
-// blank lines become new paragraphs automatically.
 document.querySelectorAll('article-text').forEach(block => {
   const raw = block.innerHTML;
   const paragraphs = raw
-    .split(/\n\s*\n/)           // split on blank lines
+    .split(/\n\s*\n/)
     .map(p => p.trim())
     .filter(p => p.length > 0)
     .map(p => `<p>${p.replace(/\n/g, ' ')}</p>`)

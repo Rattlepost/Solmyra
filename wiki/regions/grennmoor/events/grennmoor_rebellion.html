@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grennmoor Rebellion</title>
+    <!-- Adjust path depth to match file location:
+       wiki/regions/ → ../../style.css
+       wiki/         → ../style.css -->
+    <link rel="stylesheet" href="../../../../style.css" />
+  </head>
+  <body>
+    <div class="wiki-article-page">
+      <div class="wiki-article-eyebrow">BATTLE</div>
+      <h1>Grennmoor Rebellion</h1>
+      <div class="wiki-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+
+      <!-- Infobox — delete if not needed -->
+      <div class="wiki-infobox-wrap">
+        <div class="wiki-infobox">
+          <div class="wiki-infobox-title">Grennmoor Rebellion</div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Date</span>
+            <span class="wiki-infobox-value">376 CE</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Location</span>
+            <span class="wiki-infobox-value">Duskhelm</span>
+          </div>
+          <div class="wiki-infobox-row">
+            <span class="wiki-infobox-label">Participants</span>
+            <span class="wiki-infobox-value">Grennmoor, Pell's Rebels</span>
+          </div>
+          <!-- Optional image — delete if not needed -->
+        </div>
+      </div>
+
+      <h2>Overview</h2>
+      <article-text>
+        Grennmoor was in a time of unrest. A spring of heavy rainfall made the
+        fields flood more than usual, destroying this years harvest. The Council
+        of Duskhelm was slow to address the issue, as always, and this lead to
+        economic strain and hunger spread throughout the region. As the
+        starvation spread and more people died from it, the southern towns got
+        more and more resentful of the capital. Eventually, an uprising was
+        organized by Brennic Pell, a member of a minor Duskhelm royal family,
+        but not important enough to have an impact. Pell gathered together any
+        private mercenaries and people who felt the same and attacked Duskhelm's
+        central castle. Unfortunately, the guards who had been paid off did not
+        allow them through the gates as promised, stopping it in its tracks. All
+        who participated in the uprising fled the region through the southern
+        mountains to avoid punishment. The path was dangerous but most survived
+        the trip. On the other side of the mountains they found a large lake in
+        a valley and settled there. Over the next twenty years, more and more
+        people fled Grennmoor and migrated to the new city. The new city thrived
+        and expanded into a large sprawling city-state. It became known as
+        Pellhiem, named after the man who had the courage to stand up to
+        Duskhelm, even though he ultimately failed.
+      </article-text>
+    </div>
+    <script>
+      // Auto-paragraph: write plain text in <article-text> tags,
+      // blank lines become new paragraphs automatically.
+      document.querySelectorAll("article-text").forEach((block) => {
+        const raw = block.innerHTML;
+        const paragraphs = raw
+          .split(/\n\s*\n/) // split on blank lines
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0)
+          .map((p) => `<p>${p.replace(/\n/g, " ")}</p>`)
+          .join("");
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = paragraphs;
+        block.replaceWith(wrapper);
+      });
+    </script>
+  </body>
+</html>
