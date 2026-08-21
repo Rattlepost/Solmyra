@@ -5,57 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Far Lands: Home of the Gods</title>
     <link rel="stylesheet" href="../../../style.css" />
-    <style>
-      #lock-screen {
-        display: none;
-        position: fixed;
-        inset: 0;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 16px;
-        background: #0e1117;
-        z-index: 999;
-      }
-      #lock-screen.show {
-        display: flex;
-      }
-      #lock-screen p {
-        font-size: 10px;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        color: #4a5568;
-        margin: 0;
-        font-family: system-ui, sans-serif;
-      }
-      #lock-screen .diamond {
-        width: 6px;
-        height: 6px;
-        background: #4a6fa5;
-        transform: rotate(45deg);
-      }
-      #pw {
-        background: #0a0d13;
-        border: 1px solid #2a2f3e;
-        border-radius: 2px;
-        padding: 9px 16px;
-        color: #c8d6e8;
-        font-size: 13px;
-        outline: none;
-        text-align: center;
-        width: 200px;
-        font-family: system-ui, sans-serif;
-      }
-      #pw-err {
-        font-size: 11px;
-        color: #4a5568;
-        letter-spacing: 0.1em;
-        min-height: 16px;
-        margin: 0;
-        text-transform: uppercase;
-        font-family: system-ui, sans-serif;
-      }
-    </style>
   </head>
   <body>
     <div id="lock-screen">
@@ -164,9 +113,9 @@
           } else {
             err.textContent = "Incorrect";
             input.value = "";
-            input.style.borderColor = "#4a3040";
+            input.style.borderColor = "#5a2e22";
             setTimeout(() => {
-              input.style.borderColor = "#2a2f3e";
+              input.style.borderColor = "#2e2416";
               err.textContent = "";
             }, 1000);
           }

@@ -6,54 +6,6 @@
   <title>Solmyra — Wiki</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="images/favicon.ico" type="image/ico" />
-  <style>
-    #m-lock-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 500;
-      background: #0e1117;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-    }
-    #m-lock-overlay.show { display: flex; }
-    #m-lock-overlay p {
-      font-size: 10px;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #4a5568;
-      margin: 0;
-      font-family: system-ui, sans-serif;
-    }
-    #m-lock-overlay .m-lock-diamond {
-      width: 6px; height: 6px;
-      background: #4a6fa5;
-      transform: rotate(45deg);
-    }
-    #m-lock-input {
-      background: #0a0d13;
-      border: 1px solid #2a2f3e;
-      border-radius: 2px;
-      padding: 9px 16px;
-      color: #c8d6e8;
-      font-size: 13px;
-      outline: none;
-      text-align: center;
-      width: 200px;
-      font-family: system-ui, sans-serif;
-    }
-    #m-lock-err {
-      font-size: 11px;
-      color: #4a5568;
-      letter-spacing: 0.1em;
-      min-height: 16px;
-      margin: 0;
-      text-transform: uppercase;
-      font-family: system-ui, sans-serif;
-    }
-  </style>
 </head>
 <body>
 
@@ -73,7 +25,20 @@
         <div class="wiki-contents-title">Compendium</div>
       </div>
 
-      <nav class="wiki-contents-nav">
+      <div class="wiki-search">
+        <div class="wiki-search-box" id="wiki-search-box">
+          <svg class="wiki-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input id="wiki-search-input" type="text" placeholder="Search compendium…" autocomplete="off" />
+          <button class="wiki-search-clear" id="wiki-search-clear" type="button" aria-label="Clear search">&times;</button>
+        </div>
+      </div>
+
+      <div class="wiki-search-results" id="wiki-search-results"></div>
+
+      <nav class="wiki-contents-nav" id="wiki-contents-nav">
 
         <details class="wiki-nav-details" open>
           <summary>Landmasses</summary>
@@ -83,19 +48,19 @@
 
             <!-- Grennmoor — clickable + expandable ---------------------------------------------------->
             <div class="wiki-nav-expandable">
-              <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/grennmoor.html">Grennmoor</button>
+              <button class="wiki-nav-link" data-src="wiki/regions/solmarch/grennmoor/grennmoor.html">Grennmoor</button>
               <button class="wiki-nav-expand-btn" onclick="this.parentElement.classList.toggle('open')">▸</button>
             </div>
             <div class="wiki-nav-expandable-children">
               <!-- Towns dropdown under Grennmoor -->
               <details class="wiki-nav-details">
                 <summary>Towns</summary>
-                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/towns/duskhelm.html">Duskhelm</button>
-                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/towns/stillhaven.html">Stillhaven</button>
-                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/towns/greyport.html">Greyport</button>
-                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/towns/fenwick.html">Fenwick</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/grennmoor/towns/duskhelm.html">Duskhelm</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/grennmoor/towns/stillhaven.html">Stillhaven</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/grennmoor/towns/greyport.html">Greyport</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/grennmoor/towns/fenwick.html">Fenwick</button>
                 <button class="wiki-nav-link" data-src="wiki/wip.html">Fort Perrol</button>
-                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/towns/dredgeholm.html">Dredgeholm</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/grennmoor/towns/dredgeholm.html">Dredgeholm</button>
                 <button class="wiki-nav-link" data-src="wiki/wip.html">Valdrest</button>
                 <button class="wiki-nav-link" data-src="wiki/wip.html">Lone Landing</button>
                 <button class="wiki-nav-link" data-src="wiki/wip.html">Gateside</button>
@@ -107,14 +72,14 @@
               </details>
               <details class="wiki-nav-details">
                 <summary>Points of Interest</summary>
-                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/pois/dredgeholm_mine.html">Dredgeholm Mines</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/grennmoor/pois/dredgeholm_mine.html">Dredgeholm Mines</button>
                 <button class="wiki-nav-link" data-src="wiki/wip.html">Midwood Forest</button>
-                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/pois/stillwood_grove.html">Stillwood Grove</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/grennmoor/pois/stillwood_grove.html">Stillwood Grove</button>
               </details>
               <details class="wiki-nav-details">
                 <summary>Noteable Events</summary>
-                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/events/grennmoor_rebellion.html">Grennmoor Rebellion</button>
-                <button class="wiki-nav-link" data-src="wiki/regions/grennmoor/events/pellhiem_uprising.html">Pellhiem Uprising</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/grennmoor/events/grennmoor_rebellion.html">Grennmoor Rebellion</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/grennmoor/events/pellhiem_uprising.html">Pellhiem Uprising</button>
               </details>
               <details class="wiki-nav-details">
                 <summary>Culture</summary>
@@ -126,7 +91,7 @@
 
             <!-- Pellhiem ------------------------------------------------------------------------------------>
             <div class="wiki-nav-expandable">
-              <button class="wiki-nav-link" data-src="wiki/regions/pellhiem/pellhiem.html">Pellhiem</button>
+              <button class="wiki-nav-link" data-src="wiki/regions/solmarch/pellhiem/pellhiem.html">Pellhiem</button>
               <button class="wiki-nav-expand-btn" onclick="this.parentElement.classList.toggle('open')">▸</button>
             </div>
             <div class="wiki-nav-expandable-children">
@@ -136,11 +101,11 @@
               </details>
               <details class="wiki-nav-details">
                 <summary>Points of Interest</summary>
-                <button class="wiki-nav-link" data-src="wiki/regions/pellhiem/pois/fort_eldwick.html">Fort Eldwick</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/pellhiem/pois/fort_eldwick.html">Fort Eldwick</button>
               </details>
               <details class="wiki-nav-details">
                 <summary>Noteable Events</summary>
-                <button class="wiki-nav-link" data-src="wiki/regions/pellhiem/events/capture_fort_eldwick.html">Capture of Fort Eldwick</button>
+                <button class="wiki-nav-link" data-src="wiki/regions/solmarch/pellhiem/events/capture_fort_eldwick.html">Capture of Fort Eldwick</button>
               </details>
               <details class="wiki-nav-details">
                 <summary>Culture</summary>
@@ -213,7 +178,7 @@
       lockOverlay.classList.add("show");
       lockInput.value = "";
       lockErr.textContent = "";
-      lockInput.style.borderColor = "#2a2f3e";
+      lockInput.style.borderColor = "#2e2416";
       lockInput.focus();
       const newInput = lockInput.cloneNode(true);
       lockInput.parentNode.replaceChild(newInput, lockInput);
@@ -225,14 +190,134 @@
         } else {
           lockErr.textContent = "Incorrect";
           newInput.value = "";
-          newInput.style.borderColor = "#4a3040";
+          newInput.style.borderColor = "#5a2e22";
           setTimeout(() => {
-            newInput.style.borderColor = "#2a2f3e";
+            newInput.style.borderColor = "#2e2416";
             lockErr.textContent = "";
           }, 1000);
         }
       });
     }
+
+    // ------------------------------------------------------------
+    // Sidebar search
+    // ------------------------------------------------------------
+    const searchInput   = document.getElementById("wiki-search-input");
+    const searchBox     = document.getElementById("wiki-search-box");
+    const searchClear   = document.getElementById("wiki-search-clear");
+    const searchResults = document.getElementById("wiki-search-results");
+    const navEl         = document.getElementById("wiki-contents-nav");
+
+    function closeSearch() {
+      searchInput.value = "";
+      searchBox.classList.remove("has-value");
+      navEl.style.display = "";
+      searchResults.style.display = "none";
+    }
+
+    searchClear.addEventListener("click", () => {
+      closeSearch();
+      searchInput.focus();
+    });
+
+    // Pull the section a button lives under (e.g. "Towns", "Points of Interest")
+    // by walking up to the nearest <details><summary> ancestor.
+    function getSection(btn) {
+      let el = btn.parentElement;
+      while (el && el !== document.body) {
+        if (el.tagName === "DETAILS") {
+          const summary = el.querySelector(":scope > summary");
+          if (summary) return summary.textContent.trim();
+        }
+        el = el.parentElement;
+      }
+      return "";
+    }
+
+    const searchIndex = Array.from(buttons).map((btn) => ({
+      el: btn,
+      title: btn.textContent.trim(),
+      section: getSection(btn),
+      restricted: btn.dataset.restricted === "true",
+    }));
+
+    function scoreMatch(title, query) {
+      const t = title.toLowerCase();
+      const q = query.toLowerCase();
+      if (t === q) return 100;
+      if (t.startsWith(q)) return 80;
+      const words = t.split(/\s+/);
+      if (words.some((w) => w.startsWith(q))) return 60;
+      if (t.includes(q)) return 40;
+      return 0;
+    }
+
+    function renderSearchResults(query) {
+      const matches = searchIndex
+        .map((item) => ({ ...item, score: scoreMatch(item.title, query) }))
+        .filter((item) => item.score > 0)
+        .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
+
+      searchResults.innerHTML = "";
+
+      const count = document.createElement("div");
+      count.className = "wiki-search-results-count";
+      count.textContent = matches.length
+        ? `${matches.length} result${matches.length === 1 ? "" : "s"}`
+        : "";
+      searchResults.appendChild(count);
+
+      if (matches.length === 0) {
+        const empty = document.createElement("p");
+        empty.className = "wiki-search-empty";
+        empty.textContent = "No matches found";
+        searchResults.appendChild(empty);
+        return;
+      }
+
+      matches.forEach((item) => {
+        const btn = document.createElement("button");
+        btn.className = "wiki-nav-link wiki-search-result";
+
+        const label = document.createElement("span");
+        label.textContent = item.restricted ? `${item.title} 🔒` : item.title;
+        btn.appendChild(label);
+
+        if (item.section) {
+          const meta = document.createElement("span");
+          meta.className = "wiki-search-result-meta";
+          meta.textContent = item.section;
+          btn.appendChild(meta);
+        }
+
+        btn.addEventListener("click", () => {
+          item.el.click();
+          closeSearch();
+        });
+
+        searchResults.appendChild(btn);
+      });
+    }
+
+    searchInput.addEventListener("input", () => {
+      const q = searchInput.value.trim();
+      searchBox.classList.toggle("has-value", q.length > 0);
+      if (q.length === 0) {
+        navEl.style.display = "";
+        searchResults.style.display = "none";
+        return;
+      }
+      navEl.style.display = "none";
+      searchResults.style.display = "flex";
+      renderSearchResults(q);
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeSearch();
+        searchInput.blur();
+      }
+    });
 
     buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -272,7 +357,7 @@
                   showLock(password, key);
                 }
               } else {
-                mContent.innerHTML = '<p style="color:#4a5568;padding:24px;">Could not load article.</p>';
+                mContent.innerHTML = '<p style="color:#5c5340;padding:24px;">Could not load article.</p>';
               }
 
               contents.classList.add("m-hidden");
@@ -280,7 +365,7 @@
               panel.scrollTop = 0;
             })
             .catch(() => {
-              mContent.innerHTML = '<p style="color:#4a5568;padding:24px;">Could not load article.</p>';
+              mContent.innerHTML = '<p style="color:#5c5340;padding:24px;">Could not load article.</p>';
             });
         } else {
           iframe.src = btn.dataset.src;

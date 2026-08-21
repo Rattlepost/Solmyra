@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fenwick</title>
+    <title>Dredgeholm</title>
     <!-- Adjust path depth to match file location:
        wiki/regions/ → ../../style.css
        wiki/         → ../style.css -->
-    <link rel="stylesheet" href="../../../../style.css" />
+    <link rel="stylesheet" href="../../../../../style.css" />
   </head>
   <body>
     <div class="wiki-article-page">
       <div class="wiki-article-eyebrow">TOWN</div>
-      <h1>Fenwick</h1>
+      <h1>Dredgeholm</h1>
       <div class="wiki-divider">
         <div class="divider-line"></div>
         <div class="divider-diamond"></div>
@@ -22,52 +22,43 @@
       <!-- Infobox — delete if not needed -->
       <div class="wiki-infobox-wrap">
         <div class="wiki-infobox">
-          <div class="wiki-infobox-title">Fenwick</div>
+          <div class="wiki-infobox-title">Dredgeholm</div>
           <div class="wiki-infobox-row">
             <span class="wiki-infobox-label">Type</span>
-            <span class="wiki-infobox-value">Lumber Town</span>
+            <span class="wiki-infobox-value">Mining Town</span>
           </div>
           <div class="wiki-infobox-row">
             <span class="wiki-infobox-label">Size</span>
-            <span class="wiki-infobox-value">Large</span>
+            <span class="wiki-infobox-value">Small</span>
           </div>
           <div class="wiki-infobox-row">
             <span class="wiki-infobox-label">Ruled By</span>
-            <span class="wiki-infobox-value">Lord Hal Nedye</span>
+            <span class="wiki-infobox-value">Lord Ferno Balish</span>
           </div>
           <!-- Optional image — delete if not needed -->
           <div class="wiki-infobox-image">
-            <img src="images/fenwick.png" alt="Description" />
+            <img src="images/dredgeholm.png" alt="Description" />
           </div>
         </div>
       </div>
 
       <h2>Overview</h2>
       <article-text>
-        Fenwick is the third largest town in Grennmoor. It's located below
-        Midwood forest which is where Grennmoor get a majority of its timber and
-        local game. It is a fairly uneventful town, being out of the cold and
-        floodplains. However, the lord of Fenwick recently passed away and the
-        new lord is still learning the ropes and the people are watching closely
-        to see how he handles the position.
+        Dredgeholm lies on the shores of Murkmere lake. It is medium sized
+        mining town, Grennmoor's largest and basically only source of metal and
+        minerals. To the north of the city lies an outpost for miners to get
+        gear and food before heading off the the mine north of the outpost. They
+        also run sift metals from the lake, Murkmere, during the spring when the
+        rainfall brings new sediments down from the mountains. Its a fairly
+        quiet town, ruled over by Lord Ferno Balish, a quiet man focused on
+        doing his assigned job from Duskhelm, get metals and minerals for the
+        capital.
       </article-text>
-
-      <h2>Ruler &amp; Government</h2>
-      <p>
-        Its ruled by Lord Hal Nedye, a younger lord for the region. The previous
-        lord passed unexpectedly and Duskhelm did not have time to deliberate
-        about a replacement so his son came into power by default. Lord Nedye is in his
-        late 30s and isn't very well liked by the people due to his inexperience
-        and young age. His father had kept taxes low to please the people, but
-        at the cost of mounting debt. Lord Nedye choose to raise the taxes to
-        escape the scrutiny of Duskhelm, but it only brought the scrutiny of the
-        people.
-      </p>
 
       <div class="wiki-related">
     <div class="wiki-related-label">Related Articles</div>
     <div class="wiki-related-links">
-      <a class="wiki-related-link" href="../pois/midwood_forest.html">Midwood Forest</a>
+      <a class="wiki-related-link" href="../pois/dredgeholm_mine.html">Dredgeholm Mine</a>
     </div>
   </div>
     </div>
@@ -87,5 +78,15 @@
         block.replaceWith(wrapper);
       });
     </script>
+    <script>
+  // Tell parent wiki page which article is loaded so sidebar updates
+  if (window.parent !== window) {
+    const path = location.pathname;
+    const article = path.includes('/Solmyra/')
+      ? path.split('/Solmyra/')[1]
+      : path.replace(/^\//, '');
+    window.parent.postMessage({ article }, '*');
+  }
+</script>
   </body>
 </html>

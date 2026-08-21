@@ -21,7 +21,7 @@ const GRENNMOOR = {
       type: "Capital City",
       grad: "rg_poi",
       pts: "3079,3548,308", 
-      wikiLink: "wiki/regions/grennmoor/towns/duskhelm.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/duskhelm.html",
       summary: "The capital city of Grennmoor, known for its canals and stone architecture. It is ruled by the Council of Duskhelm."            // ← paste your traced polygon coords here
     },
     {
@@ -30,14 +30,14 @@ const GRENNMOOR = {
       type: "Coastal Fortress",
       grad: "rg_poi",
       pts: "2016,4874,357",
-      wikiLink: "wiki/regions/grennmoor/towns/fort_perrol.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/fort_perrol.html",
       summary: "A coastal fortress on the southern coast of Grennmoor on the south road. It serves as the first line of defence against Pellhiem to the south."            // ← paste your traced polygon coords here           // ← paste your traced polygon coords here
     },
     {
       id: "lone_landing",
       name: "Lone Landing",
       type: "Small Lakefront Town",
-      wikiLink: "wiki/regions/grennmoor/towns/lone_landing.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/lone_landing.html",
       summary: "A small town sitting quietly on the western shore of Lone Lake.",
       grad: "rg_poi",
       pts: "1925,3763,178",            // ← paste your traced polygon coords here          // ← paste your traced polygon coords here
@@ -46,7 +46,7 @@ const GRENNMOOR = {
       id: "greyport",
       name: "Greyport",
       type: "Coastal Harbor Town",
-      wikiLink: "wiki/regions/grennmoor/towns/greyport.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/greyport.html",
       summary: "A port town on the northwestern coast of Grennmoor. It is a commercial hub for trade.",
       grad: "rg_poi",
       pts: "360,2693,263",            // ← paste your traced polygon coords here            // ← paste your traced polygon coords here
@@ -55,7 +55,7 @@ const GRENNMOOR = {
       id: "stillhaven",
       name: "Stillhaven",
       type: "Large Town",
-      wikiLink: "wiki/regions/grennmoor/towns/stillhaven.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/stillhaven.html",
       summary: "A large and surprisingly wealthy town in the cold north of Grennmoor.",
       grad: "rg_poi",
       pts: "2145,1584,291",            // ← paste your traced polygon coords her            // ← paste your traced polygon coords here
@@ -64,7 +64,7 @@ const GRENNMOOR = {
       id: "valdrest",
       name: "Valdrest",
       type: "Large Town",
-      wikiLink: "wiki/regions/grennmoor/towns/valdrest.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/valdrest.html",
       summary: "A medium town in the far north coast of Grennmoor.",
       grad: "rg_poi",
       pts: "1655,659,190",            // ← paste your traced polygon coords her            // ← paste your traced polygon coords here
@@ -73,7 +73,7 @@ const GRENNMOOR = {
       id: "fenwick",
       name: "Fenwick",
       type: "Large Town",
-      wikiLink: "wiki/regions/grennmoor/towns/fenwick.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/fenwick.html",
       summary: "A large town on the edge of the Midwood forest. They are known for hunting and logging operations.",
       grad: "rg_poi",
       pts: "1374,4330,241",            // ← paste your traced polygon coords her            // ← paste your traced polygon coords here
@@ -82,7 +82,7 @@ const GRENNMOOR = {
       id: "gateside",
       name: "Gateside",
       type: "Large Town",
-      wikiLink: "wiki/regions/grennmoor/towns/gateside.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/gateside.html",
       summary: "A small town just outside of Greyport. It's residents split off from Greyport to become its own town.",
       grad: "rg_poi",
       pts: "1017,2551,89",            // ← paste your traced polygon coords her            // ← paste your traced polygon coords here
@@ -91,7 +91,7 @@ const GRENNMOOR = {
       id: "coldshore",
       name: "Coldshore",
       type: "Large Town",
-      wikiLink: "wiki/regions/grennmoor/towns/coldshore.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/coldshore.html",
       summary: "A small town on the eastern shores of Splitwater lake. Its known for its fishing and ice harvesting in the winter.",
       grad: "rg_poi",
       pts: "1397,1925,120",            // ← paste your traced polygon coords her            // ← paste your traced polygon coords here
@@ -100,7 +100,7 @@ const GRENNMOOR = {
       id: "aldshore",
       name: "Aldshore",
       type: "Large Town",
-      wikiLink: "wiki/regions/grennmoor/towns/aldshore.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/aldshore.html",
       summary: "A small town on the western shores of Splitwater lake. It is known for its peaceful atmosphere and a popular vacation spot in the summer.",
       grad: "rg_poi",
       pts: "956,2068,117",            // ← paste your traced polygon coords her            // ← paste your traced polygon coords here
@@ -109,7 +109,7 @@ const GRENNMOOR = {
       id: "Lethwick",
       name: "Lethwick",
       type: "Large Town",
-      wikiLink: "wiki/regions/grennmoor/towns/lethwick.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/lethwick.html",
       summary: "A small town in the northern part of Grennmoor on Mournwater lake. The town lives up to the lakes name, dreary and sad.",
       grad: "rg_poi",
       pts: "1469,1222,127",            // ← paste your traced polygon coords her            // ← paste your traced polygon coords here
@@ -118,7 +118,7 @@ const GRENNMOOR = {
       id: "glassend",
       name: "Glassend",
       type: "Large Town",
-      wikiLink: "wiki/regions/grennmoor/towns/glassend.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/glassend.html",
       summary: "A small town in the northern part of Grennmoor. It is known for its beautifully clear lake and snow coverered winters.",
       grad: "rg_poi",
       pts: "1112,906,104",            // ← paste your traced polygon coords her            // ← paste your traced polygon coords here
@@ -127,7 +127,7 @@ const GRENNMOOR = {
       id: "dredgeholm",
       name: "Dredgeholm",
       type: "Large Town",
-      wikiLink: "wiki/regions/grennmoor/towns/dredgeholm.html",
+      wikiLink: "wiki/regions/solmarch/grennmoor/towns/dredgeholm.html",
       summary: "A medium town in the eastern part of Grennmoor. It's known for its mining operations in Dredgeholm Mine, one of the only mines in Grennmoor.",
       grad: "rg_poi",
       pts: "3081,2226,162",            // ← paste your traced polygon coords her            // ← paste your traced polygon coords here

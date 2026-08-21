@@ -9,7 +9,7 @@ const PELLHIEM = {
       type: "Capital City",
       grad: "rg_poi",
       pts: "", 
-      wikiLink: "wiki/regions/grennmoor/towns/duskhelm.html",
+      wikiLink: "wiki/regions/solmarch/pellhiem/towns/duskhelm.html",
       summary: "The capital city of Grennmoor, known for its canals and stone architecture. It is ruled by the Council of Duskhelm."            // ← paste your traced polygon coords here
     },
   ]
