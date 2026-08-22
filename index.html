@@ -3,6 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      // The interactive pan/zoom map isn't usable on small/touch screens,
+      // so mobile visitors go straight to the wiki compendium instead.
+      if (window.innerWidth <= 768) {
+        location.replace("wiki.html");
+      }
+    </script>
     <title>Solmyra</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="images/favicon.ico" type="image/ico" />
