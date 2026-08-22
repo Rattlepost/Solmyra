@@ -1,5 +1,5 @@
 const PELLHIEM = {
-  map: "images/pellhiem.png",
+  map: "images/pellhiem.webp",
   viewBox: "0 0 3326 4193", // ← update if your map is a different size
 
   regions: [
